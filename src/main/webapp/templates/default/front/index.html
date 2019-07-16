@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>首页</title>
+<link href="${base}/templates/${config.theme}/front/static/css/comm.css" rel="stylesheet" type="text/css" />
+<link href="${base}/templates/${config.theme}/front/static/css/index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${base}/templates/${config.theme}/front/static/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="${base}/templates/${config.theme}/front/static/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="${base}/templates/${config.theme}/front/static/js/ajax.js"></script>
+<script type="text/javascript" src="${base}/templates/${config.theme}/front/static/js/common.js"></script>
+<style>
+	.add-cart {display:block;width:22px;height:22px;float:right;margin-right:25px;cursor:pointer;}
+	.add-cart img {display:block;width:22px;height:22px;}
+</style>
+<style type="text/css">
+	body{background-color:#f0fbfd;}
+
+	.s_bg_top{background:url("${base}/templates/${config.theme}/front/static/images/day_top.jpg") no-repeat center top;position: relative;}
+
+</style>
+</head>
+<body>
+<!-- header start -->
+[#include "templates/${config.theme}/front/header.html"]
+<!-- header end -->
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	var sublist88 = $(".header_bot").offset().top;	
+	var stickyMenu = function(){
+		
+	var scrollTop = $(window).scrollTop(); 
+	if (scrollTop > sublist88) { 
+		 $(".header_bot").addClass("index_tab_fixed");
+		} else {
+			$(".header_bot").removeClass("index_tab_fixed");
+		}   
+	};
+	
+	$(window).scroll(function() {
+		 stickyMenu();
+	});
+});
+</script>
+<div class="s_bg_top">
+	<div class="s_bg_bottom">
+		<div id="J_hotsell_wrap" class="shoplast J_scrollspy">
+			<div style="margin: 15px 0">
+				当前位置: <a href="${base}/">首页</a>
+			</div>
+ 			<ul class="shop_lastest clearfix" id="J_wrap_pro_add">
+ 				[@product_list count=9 orderBy="sales desc" ]
+ 					[#list products as product]
+					<li class="s1_mod  J_proPic_wrap">
+						<div class="s1_pic">
+				      		<a href="${base}${product.path}" class="J_to_list"><img width="310" height="180" alt="${product.name}" src="${product.productImages.large}"></a>
+						</div>
+						<div class="s1_info">
+							<span class="s1_info_name"> 
+								<a  href="${base}${product.path}" class="J_to_list">${product.name}</a>
+								<span class="add-cart" onclick="javascript:addToCart(${product.id},1);"><img src="${base}/templates/${config.theme}/front/static/images/cart.png"/></span>
+							</span>
+							<span class="s1_info_discount" style="padding-top:8px;color: #1f8902;"><span>会员价：￥${product.price}</span></span>
+		          			<span class="s1_info_time">
+									<!--<span>规格${product.specifications}</span>-->
+								<del class="gray">￥${product.marketPrice}</del>
+							</span>
+						</div>
+					</li>
+					[/#list]
+				[/@product_list]
+  			</ul>
+		</div>
+	</div>
+</div>
+<!-- footer start -->
+[#include "templates/${config.theme}/front/footer.html"]
+<!-- footer end -->
+</body>
+</html>

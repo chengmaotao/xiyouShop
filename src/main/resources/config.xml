@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xiyou>
+	<config name="siteName" value="西柚商城" />
+	<config name="siteUrl" value="http://newshop.dajiabuy.cn" />
+    <!--<config name="siteUrl" value="http://localhost:8081" />-->
+	<config name="logo" value="/upload/image/logo.png" />
+	<config name="title" value="JreCms,JavaCms,Java内容管理系统,网站建设,网站开发,微信公众号开发,微信小程序开发,微信APP开发,webapp开发" />
+	<config name="keywords" value="JreCms,JavaCms,Java内容管理系统,互联网建站平台,网站建设,网站开发,微信公众号开发,微信小程序开发,微信APP开发,webapp开发" />
+	<config name="description" value="JreCms,JavaCms,Java内容管理系统,互联网建站平台,网站建设,网站开发,微信公众号开发,微信小程序开发,微信APP开发,webapp开发,省时省力省心,标准化制作流程,让您建站无忧" />
+	<config name="theme" value="default" />
+    <config name="largeProductImageWidth" value="310" />
+    <config name="largeProductImageHeight" value="180" />
+    <config name="mediumProductImageWidth" value="235" />
+    <config name="mediumProductImageHeight" value="137" />
+    <config name="thumbnailProductImageWidth" value="110" />
+    <config name="thumbnailProductImageHeight" value="64" />
+    <config name="defaultLargeProductImage" value="/upload/image/default_large.jpg" />
+    <config name="defaultMediumProductImage" value="/upload/image/default_medium.jpg" />
+    <config name="defaultThumbnailProductImage" value="/upload/image/default_thumbnail.jpg" />
+	<config name="isWatermarkEnabled" value="false" />
+	<config name="watermarkAlpha" value="50" />
+	<config name="watermarkImage" value="/upload/image/watermark.png" />
+	<config name="watermarkPosition" value="topLeft" />
+	<config name="fileUploadPath" value="/data/web/upload/xysc/${.now?string('yyyyMM')}/" />
+    <config name="smsAccessKey" value="xxx" />
+    <config name="smsAccessSecret" value="xxx" />
+    <config name="smsSignName" value="西柚商城" />
+    <config name="smsEndpoint" value="xxx" />
+    <config name="smsTopicName" value="xxx" />
+    <config name="alipayAppId" value="2019011763023913" />
+    <config name="alipayAppPrivateKey" value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCrVIxp1y9Y73eB9dHyhC5PdktrB1Mky5l/cWtrYXGo079BqqGeFWiU7GVlTnU5nW1VZMhbEpM9HVNabqLk+OTf7cPZBr+yt7wv35SsWSOTU9eLhHEavcsHySyzYmp1Qv64RvMTD8Dmz7108gey6CpbEo9dPMH9nC/E3MRLl7i/CIAo6P9//X1tVylpyivlXGfA33UVHWXJ1x3FDNBfdMPlxEgFfOGGIY/WBwcRJxIb20ytOyGZKXIKvDZ37ngV9BE6BSeMIAs0WUjjwatJTacGKow6H6q/NUPw59k+gzkvs7ieTI0QglcAUiFBAX4cQzevdJKE3FNpy0smzs46SeetAgMBAAECggEBAKA0OevKE/LkUGpMUtmjca5J3fGhcsRoQQrjIl/RSTdlcGRVyjQIrrb6aUGWYJTUOOTtjU9jihxObJ+V7mmOtm0RZd1sqxnRJn3ZYara2yIq9tT1rdEkgVGxckP2lbc6QvZLGYXMaEMrI2vT2REYeGqaa0Xyxy5+ukgpar+Iim7NWkyX6t8ybIROR5UW3OlqRSHn/wETTZKbax1b0TG1epoPNjrEghlzO6Fx5xVrPgp2TZV8g6TZNzeV5XwmocwW69NvWzwSfvrlbUs9zr4IOe5NK/jtBQ157oIXgBbBEuJk5L182pS/dKbvfQvv+TUC7V9ruU/W863jSE1lKHTPSL0CgYEA4cQdNqEJ/2sdGfA9jGCkB3QVs5HZyC7lVP82qjaU2oaGCNzI3vi5OyQXoH6awgtONZhPiId/kDJgAJihHywwY+wMEzd9FaviW5LBMsNMgHMRZD54YNJELl0JEWw/Sh2fa+8+Zi5Z3PmtmvrMIdq6tOpPFeCF3O0855YhG43xlzcCgYEAwkY5buIlSwpZQiEdSxg556l6Obgodqi0gpvbeiqifjet1ZPYEg0Nm7SF4SrkF5hBSzevUyHggbJ5Y8uKzFirUYYfJnAs9SsBG9vsZejG4zb54efKIytFD1yG6BQqFcxNxuLOvMxNKEzh13L/0BfkPyKiQKaoyUW0wh2HUfCPYjsCgYBxo6GAyfaaVnRDhiW070AhcFEsHhIdLV3KNtxxOSAcDvKQq3GAqnmyRyyNYKzNV5t6ZrxB4NJY5sJkCm+vnTKOWVaKpbeUnPxHU8tjneJ4FXN/neJB+hTPsYzK9E23JMoGLlqeXF5nWFYGWI8/yzWHsxkzzdwTpGavu2XW1M/yaQKBgA1VaIe1ub2Gvk2NnEcVKJQ/y4W+n/hU5962979QwcpL5ABunzvN7YssPqwPl4wPBRw2fDAGeTQtnas9ww73Xvq/a8/ljxBcnTzeQUFVUqExmsDoebUkOR8uyIuRJrpMRWJLGslWdE05yZ5R5EDSAvZaWCx7w8XcpOVVxX3YNt8VAoGBAIfTuCWtOUcdmC/TUf1Ig9jcCpyYr3tPnYyTdxPP0jrVSAz+5QMvjshKJjlwaD5pxoDEtFjsr4hG+B7su37Mt1hGtZJ4oooRcHxHbrcpsmgFtZgCwUHuZ91N038Nn9bx1D9IUNPvc03eDPMfCprU+mxGhe7sHDlw2uyN6zNGvccn" />
+    <config name="alipayPublicKey" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh8gZLyH/EPjUmSnFoSP+loL1zhfaS7p/JEWpk2I+sDXUt4eEH0FUVIaHs2NBtOayEBZVa8THStqvgAPZ8Y6YTDvRy58XQNENw9B28q1qEqGmMJHjuvqnT89oZh4yl/EZQ+Te/5soLURhWp/yRdop/ISyFOjAEw4Xt80olHZ0aBWgSI70hTjxA+3Vb+KsLldduMIqgoToDeFf078JPQca1ng93ZlRedEiqFMp8NMzduR8Lhi4EFZ1xPwL5smfQTCkkRgTx6FeJKfj6xGx8wXhHnHKfnN4GS6YH4OD5nHh6tzGz6TR58qQhNJIpZeXVtnenJwtVlzWNoKykyEgl5YU+QIDAQAB" />
+    <config name="weixinpayAppId" value="xxx" />
+    <config name="weixinpayMchId" value="xxx" />
+    <config name="weixinpayKey" value="xxx" />
+</xiyou>
