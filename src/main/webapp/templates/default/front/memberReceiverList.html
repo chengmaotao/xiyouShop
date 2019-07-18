@@ -118,21 +118,32 @@
  $(document).ready(function() {
 	 
      $('form').submit(function() {
-        var consignee=$(this).find("input[name='consignee']").val();
-        if(consignee == ''){
-            alert("请输入收货人姓名!")
+		 var district=$(this).find(".district").val();
+         var province=$(this).find(".province").val();
+         var city=$(this).find(".city").val();
+        if(district == '' || province == '' || city == ''){
+            alert("请选择配送区域!")
             return false;
         }
-        var district=$(this).find(".district").val();
-        if(district == ''){
-            alert("请选择收货地址!")
-            return false;
-        }
+
+         var consignee=$(this).find("input[name='consignee']").val();
+         if(consignee == ''){
+             alert("请输入收货人姓名!")
+             return false;
+         }
+
         var phone=$(this).find("input[name='phone']").val();
         if(phone == ''){
             alert("请输入电话!")
             return false;
         }
+
+         var address=$(this).find("input[name='address']").val();
+         if(address == ''){
+             alert("请输入详细地址!")
+             return false;
+         }
+
     }); 
  });
  </script>

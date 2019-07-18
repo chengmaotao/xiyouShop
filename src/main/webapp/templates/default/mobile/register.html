@@ -27,7 +27,7 @@
 <div>
 <div style="line-height:44px; height:44px; width:100%"></div>
 	<div class="space15"></div>
-    <div class="connerdiv" style="font-size:14px;color:#000000;text-align:left;padding:0px 8px;">注册后可享受红包积分等优惠
+    <div class="connerdiv" style="font-size:14px;color:#000000;text-align:left;padding:0px 8px;">
 		<ul id="switch-title">
        		<li onclick="javascript:location.href='${base}/login';">登录</li>
 	        <li onclick="javascript:location.href='${base}/register';" class="on-hit">注册</li>
@@ -35,7 +35,7 @@
 		<div style="clear:both;"></div>
     </div>
  	<div class="connerdiv" id="account-div">
- 	    <form id="inputForm" action="${base}/register" method="post">
+ 	    <form id="inputForm" action="${base}/register/register" method="post">
 		    <dl class="connerbox">
 				<dd><span class="form_hd">手机号：</span><span class="form_td"><input name="username" id="username" type="text" placeholder="请输入手机号" value="" maxlength="50" class="text_input"></span></dd>
 		        <dd> <span class="form_hd">验证码：</span><span style="margin-left: 45px;"><input style="width:120px;" type="tel" placeholder="请输入短信验证码" value="" id="code" class="text_input" name="code"><input type="button"  id="getCode" value="获取短信验证码" style="width:110px" onclick="getVerify()"></span></dd>
@@ -43,9 +43,7 @@
 		      	<dd><span class="form_hd">确认密码：</span><span class="form_td ml80"><input name="rePassword" id="rePassword" type="password" value="" maxlength="50" placeholder="6－20位字母、数字结合" class="text_input"></span></dd>
 		    </dl>
 			<dl id="tips" style="color:#da4f49; text-align:center; font-weight:bold;">
-                 [#if feedback??]
-                     ${feedback.msg}
-                 [/#if]
+
 			</dl>
 	    	<div class="space15"></div>
 	    	<input name="btnReg" type="submit" class="btn_red largerbtn longbtn" value="注册">
@@ -109,6 +107,18 @@
         $('#inputForm #tips').html('请输入手机号！');
          return false;;
      }
+
+     if($('#username').val().length!=11){
+         $('#inputForm #tips').html('请输入有效的手机号码！');
+         return false;
+     }
+     var usernameReg = /^1[3|4|5|8|9|7][0-9]\d{4,8}$/;
+     if(!usernameReg.test($('#username').val())){
+         $('#inputForm #tips').html('请输入有效的手机号码！');
+         return false;
+     }
+
+
      if(issend && c > 0){
          return;
      }
@@ -116,10 +126,11 @@
      $.ax("${base}/common/sms/send",
              {"mobile":$('#username').val(),"type":"registerMember"},'GET',null,'json',
              function(data){
-            	 $("#code").val(data);
-             },
-             function(data){
-         });
+                 if(data.status != 0){
+                     $('#inputForm #tips').html(data.message);
+                     stopCount();
+                 }
+             });
      issend = true;
      timedCount();
  }

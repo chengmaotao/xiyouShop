@@ -93,6 +93,16 @@ public class OrderController extends BaseController{
 		order.setMemberId(currentMember.getId());
 		order.save();
 		List<CartItem>  cartItems = currentCart.getCartItems();
+
+		if(cartItems == null || cartItems.isEmpty()){
+			int pageSize = 20 ;
+			setAttr("page",new Order().dao().findPage(1,pageSize,currentMember.getId(),null));
+
+
+			render("/templates/"+getTheme()+"/"+getDevice()+"/memberOrderList.html");
+			return;
+		}
+
 		for(CartItem cartItem:cartItems){
 			OrderItem orderItem = new OrderItem();
 			orderItem.setCreateDate(new Date());

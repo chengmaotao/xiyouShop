@@ -34,6 +34,9 @@ public class CartController extends BaseController{
 	 * 查看
 	 */
 	public void view(){
+
+        Long productId=getParaToLong(0);
+
 	    Cart currentCart = getCurrentCart();
 	    Map<String,Object> data = new HashMap<>();
         data.put("quantity", currentCart.getQuantity());
@@ -50,7 +53,15 @@ public class CartController extends BaseController{
             productData.put("name", product.getName());
             productData.put("image", product.getImage());
             productData.put("price", product.getPrice());
+            productData.put("productId",product.getId());
             cartItemData.put("product", productData);
+
+            if(productId != null && productId == product.getId()){
+                data.put("hasNum",true);
+                data.put("cartProductId",productId);
+                data.put("cartProductQuantity",item.getQuantity());
+            }
+
             cartItemDatas.add(cartItemData);
         }
         data.put("cartItems", cartItemDatas);

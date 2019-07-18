@@ -20,7 +20,11 @@ public class LoginController extends BaseController{
 	 * 登录页面
 	 */
 	public void index(){
-	    String username = getPara("username");
+		render("/templates/"+getTheme()+"/"+getDevice()+"/login.html");
+	}
+
+    public void login(){
+        String username = getPara("username");
         String password = getPara("password");
         if(StringUtils.isNotBlank(username) && StringUtils.isNotBlank(password)){
             Member member = new Member().dao().findByUsername(username);
@@ -34,6 +38,6 @@ public class LoginController extends BaseController{
                 return;
             }
         }
-		render("/templates/"+getTheme()+"/"+getDevice()+"/login.html");
-	}
+        render("/templates/"+getTheme()+"/"+getDevice()+"/login.html");
+    }
 }

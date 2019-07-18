@@ -28,7 +28,7 @@
 		<div class="head_meun"><a href="${base}/view/help"></a></div>
 	</header>
 	<ul class="meunTab">
-		<li class="cur" >热卖</li>
+		<li class="cur" >西柚热卖</li>
 		<li>快速购买</li>
 	</ul>
 	<div class="index_warp" style="display: block">
@@ -36,12 +36,12 @@
 		[@ad_position id = 3]
                 <div class="pro_slide" id="scroll_img">
 		<ul>
-		[#list adPosition.ads as ad]
+		[#list adPosition.enableAds as ad]
 		<li><a href="${ad.url}"><img src="${ad.image}" width="720"/></a></li>
 		[/#list]
 		</ul>
 		<ol id='scroll_num'>
-		[#list adPosition.ads as ad]
+		[#list adPosition.enableAds as ad]
 		<li [#if ad_index==0]class="cur"[/#if]></li>
 		[/#list]
 		</ol>
@@ -65,32 +65,46 @@
 		    </script>
           [/@ad_position]
 		<!--scroll-->
-		<nav><a href="javascript:void(0)" onClick="fenlei(0)">叶菜类</a><a href="javascript:void(0)" onClick="fenlei(1)">瓜果类</a><a href="javascript:void(0)" onClick="fenlei(2)">根茎类</a><a href="javascript:void(0)" onClick="fenlei(0)" id="fenlei">商品分类</a>
+		<nav>
+<!--            <a href="javascript:void(0)" onClick="fenlei(0)">叶菜类</a>
+            <a href="javascript:void(0)" onClick="fenlei(1)">瓜果类</a>
+            <a href="javascript:void(0)" onClick="fenlei(2)">根茎类</a>
+            <a href="javascript:void(0)" onClick="fenlei(0)" id="fenlei">商品分类</a>-->
+
+
+			[@product_category_root_list count=3 ]
+				[#list productCategories as productCategorie]
+					<a href="javascript:void(0)" onClick="fenlei(${productCategorie_index})">${productCategorie.name}</a>
+				[/#list]
+			[/@product_category_root_list]
+			<a href="javascript:void(0)" onClick="fenlei(0)" id="fenlei">商品分类</a>
 		</nav>
-		<ul class="ad_chart">
+<!--		<ul class="ad_chart">
 			[@ad_position id = 4]
-                    [#list adPosition.ads as ad]
+                    [#list adPosition.enableAds as ad]
 					<li><a href="${ad.url}"><img src="${ad.image}"/></a></li>
 					[/#list]
             [/@ad_position]
-		</ul>
+		</ul>-->
 		<div class="hotBuy">
-			<h2>68热卖</h2>
+			<h2>西柚热卖</h2>
 			<ul>
-				[@product_list count=9 type=3 orderBy="sales desc" ]
+				[@product_list count=9 orderBy="sales desc" ]
 					[#list products as product]
 						<li>
 							<a href="${base}${product.path}"><img src="${product.image}" alt=""/></a>
 							<a href="${base}${product.path}">${product.name}</a>
 							<div class="pronum">
-								<a id="hotReduceProduct_${product.id}" onClick="hotReduceProduct('${product.id}');" style="display: none"></a>
-						        <span id="hotProductQuantity_${product.id}" class="count"></span>
+<!--								<a id="hotReduceProduct_${product.id}" onClick="hotReduceProduct('${product.id}');" style="display: none"></a>
+						        <span id="hotProductQuantity_${product.id}" class="count"></span>-->
+								<!--<input type="hidden" id="hotProductQuantity_${product.id}">-->
+								<a style="display: none"></a>
 						        <a id="hotAddProduct_${product.id}" onClick="hotAddProduct('${product.id}');"></a>
 							</div>
 							<p>
 								<em>${product.specifications}</em>
 								<span>￥${product.price}</span>
-								<i>￥${product.market_price}</i>
+								<i>￥${product.marketPrice}</i>
 							</p>
 						</li>
 					[/#list]
@@ -102,12 +116,12 @@
 	</div>
 	<div class="index_warp iw">
 		<div class="pro_sh">
-			<a href="${base}/product/search">搜索</a>
-			<p><em>公告</em>购满38元，门店免费配送上门！</p>
+			<a href="${base}/product/search?orderBy=sales desc">搜索</a>
+			<p><em>公告</em>购满${delivery}元，免费配送！</p>
 		</div>
 		<div class="category">
 			<ul>
-				<li val="1"><a href="javascript:;">叶菜类</a></li>
+<!--				<li val="1"><a href="javascript:;">叶菜类</a></li>
 				<li val="2"><a href="javascript:;">瓜果类</a></li>
 				<li val="3"><a href="javascript:;">根茎类</a></li>
 				<li val="4"><a href="javascript:;">菌菇类</a></li>
@@ -117,7 +131,14 @@
 				<li val="8"><a href="javascript:;">豆制品</a></li>
 				<li val="9"><a href="javascript:;">粮　油</a></li>
 				<li val="10"><a href="javascript:;">干货汤品</a></li>
-				<li val="11"><a href="javascript:;">奶制品</a></li>				
+				<li val="11"><a href="javascript:;">奶制品</a></li>	-->
+
+				[@product_category_root_list count=30 ]
+					[#list productCategories as productCategorie]
+						<li val="${productCategorie.id}"><a href="javascript:;">${productCategorie.name}</a></li>
+					[/#list]
+				[/@product_category_root_list]
+
 			</ul>
 		</div>
 		<div class="prolist">
@@ -133,12 +154,15 @@
 	        <div class="cart">
 	            <span></span>
 	            <em id="cartQuantity">0</em>
-	            <div>&yen;38起送</div>
+				<div></div>
 	        </div>
 	    </a>
 	</footer>
 	<!-- header end -->
 	<script>
+
+        var cartItems;
+
         $(".category li").click(function(){
             $(this).addClass("cur").siblings().removeAttr("class");
             var cid = $(this).attr("val");
@@ -160,17 +184,22 @@
                     	 $(".ccbg").css("position", "none");
                          $("#loading").remove();
                          $('.ccbg').html(data);
-                    },
-                    function(data){
-                    	console.dir(data);
-                });
+                         if(cartItems != undefined && cartItems != null){
+                             for (var i=0;i<cartItems.length;i++) {
+                                 var productInfo = cartItems[i].product;
+                                 $("#reduceProduct_"+productInfo.productId).css("display","");
+                                 $("#productQuantity_"+productInfo.productId).html(cartItems[i].quantity);
+                                 $("#hid_productQuantity_"+productInfo.productId).val(cartItems[i].quantity);
+                             }
+						 }
+                    });
         }
        
-       
+
         //更新购物车数量
         function updateQuantity(productId,quantity){
             $.ax("${base}/cart_item/update",
-                     {"productId":productId,"quantity":quantity,"type":1}, 'POST',null,'json',
+                     {"productId":productId,"quantity":quantity,"type":2}, 'POST',null,'json',
                      function(data){
                          if(data.productQuantity<=0){
                              $("#reduceProduct_"+productId).css("display","none");
@@ -180,18 +209,36 @@
                              $("#productQuantity_"+productId).html(data.productQuantity);
                              $("#cartQuantity").html(data.quantity);
                          }
-                     },
-                     function(data){
-                 });
+
+                         loadCart();
+                     });
         }
         
-        function addProduct(productId){
+       function addProduct(productId){
             $("#reduceProduct_"+productId).css("display","");
-            updateQuantity(productId,1);
+
+		   var cartItemNum = $("#hid_productQuantity_"+productId).val();
+
+           if(cartItemNum == null || cartItemNum == ''){
+               cartItemNum = 1;
+           }else{
+               cartItemNum = Number(cartItemNum)+1
+           }
+           $("#hid_productQuantity_"+productId).val(cartItemNum);
+           updateQuantity(productId,cartItemNum);
+
         }
         
         function reduceProduct(productId){
-            updateQuantity(productId,-1);
+            var cartItemNum = $("#hid_productQuantity_"+productId).val();
+
+            if(cartItemNum == null || cartItemNum == '' || Number(cartItemNum) < 2){
+                return;
+            }else{
+                cartItemNum = Number(cartItemNum) -1 ;
+                $("#hid_productQuantity_"+productId).val(cartItemNum);
+                updateQuantity(productId,cartItemNum);
+            }
         }
         
         
@@ -201,30 +248,28 @@
                      {"productId":productId,"quantity":quantity,"type":1}, 'POST',null,'json',
                      function(data){
                          if(data.productQuantity<=0){
-                             $("#hotReduceProduct_"+productId).css("display","none");
-                             $("#hotProductQuantity_"+productId).html("");
+                            /* $("#hotReduceProduct_"+productId).css("display","none");*/
+                            /* $("#hotProductQuantity_"+productId).html("");*/
                              $("#cartQuantity").html(data.quantity);
                          }else{
-                             $("#hotProductQuantity_"+productId).html(data.productQuantity);
+                            /* $("#hotProductQuantity_"+productId).html(data.productQuantity);*/
                              $("#cartQuantity").html(data.quantity);
                          }
-                     },
-                     function(data){
-                 });
+
+                         loadCart();
+                     });
         }
         
         function hotAddProduct(productId){
-            $("#hotReduceProduct_"+productId).css("display","");
+           /* $("#hotReduceProduct_"+productId).css("display","");*/
+
             hotUpdateQuantity(productId,1);
         }
         
-        function hotReduceProduct(productId){
-            hotUpdateQuantity(productId,-1);
-        }
-        
-	
+
 	$(function(){
-		getProductCategoryHtml(1);
+
+
 		$(".category li").eq(0).addClass("cur").siblings().removeAttr("class");
 		$(".meunTab li").click(function(){
 			$(this).addClass("cur").siblings().removeAttr("class");
@@ -243,9 +288,9 @@
 		$.ax("${base}/cart/view",null,'GET',null,'json',
 	            function(data){
 					$("#cartQuantity").text(data.quantity);
-	            },
-	            function(data){
-	        });
+					cartItems = data.cartItems;
+	            }
+	       );
 		
 	}	
 	</script>

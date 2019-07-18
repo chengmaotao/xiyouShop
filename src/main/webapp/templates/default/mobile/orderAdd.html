@@ -41,25 +41,28 @@
     <ul class="oldAddress" style="margin-bottom: 10px">
         <li>
             <p>配送方式</p>
-            <p><input name="shippingMethod" type="radio" value="self" id="self" checked /><label for="self">门店自提 (￥0.00)</label></p>
-            <p><input name="shippingMethod" type="radio" value="deliver" id="deliver" /><label for="deliver">门店配送-满38免运费 (￥15.00)</label></p>
+            <p><input name="shippingMethod" type="radio" value="deliver" id="deliver" checked/><label for="deliver">门店配送-满${delivery}免运费 (￥${deliveryFee})</label></p>
         </li>
     </ul>
     <div class="cartdiv">
     [#list currentCart.cartItems as cartItem]
-        <div class="cartlist clearfix">
+        <div class="cartlist clearfix newlast-child1">
                 <div class="space10"></div>
                 <div class="cartlistinner clearfix"> 
                 <a href="${base}${cartItem.product.path}" class="cart_orderlist_i">
                     <img salt="${cartItem.product.name}" src="${cartItem.product.image}" width="80" height="101"> 
                 </a>
                 <div class="cart_orderlist_info"> 
-                    <a href="goods.php?id=632">
+                    <a href="${base}${cartItem.product.path}">
                         <p class="cart_g_name">${cartItem.product.name}</p>
                         <p class="cart_b_name"></p>
-                        <p class="fontred">${cartItem.product.price}</p>
+                        <p class="fontred">￥${cartItem.product.price}</p>
                         <p class="space5"></p>
                     </a>
+                    <div class="space5"></div>
+                    <div class="goods_Cnum clearfix" id="goods_Cnum">
+                        数量 ${cartItem.quantity}
+                    </div>
                 </div>
                 <a class="cart_orderlist_p" style="display:block"> 
                     <span class="c_price" id="subtotal_${product.id}"> ￥${cartItem.subtotal}</span>
@@ -67,17 +70,49 @@
             </div>
         </div>
      [/#list]
-     <div class="orderaction clearfix"> 
+<!--     <div class="orderaction clearfix">
              <div class="fl"></div>      
              <span id="order-integral"></span><br>
             <span style="color: red;text-align: center"></span><br>
-         <p class="fr"><span class="c_t_price" id="cart_amount_desc">￥${currentCart.totalPrice}</span></p>
-             <div class="clear"></div>
-     </div>
+                <p class="fr">
+                    [#if hasDeliveryFee]
+                        <span class="c_t_price">商品总金额: ￥${currentCart.totalPrice}</span><br/>
+                        <span class="c_t_price">运费: ￥${deliveryFee}</span><br/>
+                    [/#if]
+                    <span class="c_t_price" id="cart_amount_desc">应付款金额: ￥${realTotalPrice}</span>
+                </p>
+            <div class="clear"></div>
+     </div>-->
   </div>
   
     <div class="bottomdiv clearfix">
+
+        <div class="inner clearfix">
+
+            <p style="display: flex;justify-content: space-between">
+                <span>商品总金额 </span>
+                <span>￥${currentCart.totalPrice}</span>
+            </p>
+
+            [#if hasDeliveryFee]
+                <p style="display: flex;justify-content: space-between">
+
+                    <span>运费</span>
+                    <span style="color: #F02387"> + ￥${deliveryFee}</span>
+                </p>
+            [#else]
+
+                <p style="display: flex;justify-content: space-between">
+
+                    <span>运费</span>
+                    <span style="color: #F02387"> + ￥0.00</span>
+                </p>
+
+            [/#if]
+        </div>
+
 	     <div class="inner clearfix">
+             <span class="c_t_price" id="cart_amount_desc"> ￥${realTotalPrice}</span>
 	        <a href="javascript:;" class="fr btn_sure" id="btnOrder">下订单</a>
 	     </div>
      </div>

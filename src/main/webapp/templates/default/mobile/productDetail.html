@@ -14,7 +14,7 @@
 <script type="text/javascript" src="${base}/templates/${config.theme}/mobile/static/js/ajax.js"></script>
 </head>
 <header class="bar">
-	<div class="goBack" onClick="location.href='${base}/view/diancai'"></div>
+	<div class="goBack" onClick="history.go(-1)"></div>
 	<p>
 		<a class="cur" href="javascript:void(0)" onClick="getProductBasic()" id="getProductBasic">商品</a>
 		<a href="javascript:void(0)" onClick="getIntroduction()" id="getIntroduction">详情</a>
@@ -33,12 +33,12 @@
 		</div>
 		<div class="pro_price pd10">
 			<span>&yen;${product.price}</span>
-			<var>促销价</var>
-			<em>市场价<em>￥${product.market_price}</em></em>
+			<var>会员价</var>
+			<em>市场价<em>￥${product.marketPrice}</em></em>
 		</div>
 		<div class="pro_support pd10">
-			<p><var>服务支持：</var>24小时无条件退换货、1小时送达/半日达</p>
-			<p><em>送</em>满38元，门店免费配送到家</p>
+			<!--<p><var>服务支持：</var>24小时无条件退换货、1小时送达/半日达</p>-->
+			<p><em>送</em>满${delivery}元，免费配送</p>
 		</div>
 		<div class="pro_parameter">
 			<h2>产品参数</h2>
@@ -58,14 +58,17 @@
 	</div>
 	<footer>
 		<div class="goods_num">商品数量：
-			<a id="reduceProduct_${product.id}" onClick="reduceProduct('${product.id}');" style="display: none"></a>
-			<span id="productQuantity_${product.id}" class="count">0</span>
+
+            <a id="reduceProduct_${product.id}" onClick="reduceProduct('${product.id}');" style="display: none"></a>
+            <span id="productQuantity_${product.id}" class="count"></span>
+			<input type="hidden" id="hid_productQuantity_${product.id}">
 			<a id="addProduct_${product.id}" onClick="addProduct('${product.id}');"></a>
+
 		</div>
 		<div class="cart" onClick="location.href='${base}/cart/list'">
 			<span></span>
 			<em id="cartQuantity">0</em>
-			<div>¥38起送</div>
+			<div></div>
 		</div>
 	</footer>
 	<script type="text/javascript">
@@ -87,7 +90,7 @@
 	       //更新购物车数量
         function updateQuantity(productId,quantity){
             $.ax("${base}/cart_item/update",
-                     {"productId":productId,"quantity":quantity,"type":1}, 'POST',null,'json',
+                     {"productId":productId,"quantity":quantity,"type":2}, 'POST',null,'json',
                      function(data){
                          if(data.productQuantity<=0){
                              $("#reduceProduct_"+productId).css("display","none");
@@ -104,11 +107,27 @@
         
         function addProduct(productId){
             $("#reduceProduct_"+productId).css("display","");
-            updateQuantity(productId,1);
+
+            var cartItemNum = $("#hid_productQuantity_" + productId).val();
+            if(cartItemNum == null || cartItemNum == ''){
+                cartItemNum = 1;
+			}else{
+                cartItemNum = Number(cartItemNum)+1
+			}
+            $("#hid_productQuantity_" + productId).val(cartItemNum)
+            updateQuantity(productId,cartItemNum);
         }
         
         function reduceProduct(productId){
-            updateQuantity(productId,-1);
+
+            var cartItemNum = $("#hid_productQuantity_" + productId).val();
+            if(cartItemNum == null || cartItemNum == '' || Number(cartItemNum) < 2){
+                return;
+            }else{
+                cartItemNum = Number(cartItemNum) -1 ;
+                $("#hid_productQuantity_" + productId).val(cartItemNum)
+                updateQuantity(productId,cartItemNum);
+            }
         }
 	
 	</script>
@@ -121,12 +140,16 @@ $(function(){
 
 function loadCart(){
     //ajax
-    $.ax("${base}/cart/view",null,'GET',null,'json',
+    $.ax("${base}/cart/view/${product.id}",null,'GET',null,'json',
             function(data){
                 $("#cartQuantity").text(data.quantity);
-            },
-            function(data){
-        });
+
+                if(data.hasNum){
+                    $("#reduceProduct_"+data.cartProductId).css("display","");
+                    $("#productQuantity_"+data.cartProductId).text(data.cartProductQuantity);
+                    $("#hid_productQuantity_"+data.cartProductId).val(data.cartProductQuantity);
+                }
+            });
     
 }   
 

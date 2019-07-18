@@ -23,7 +23,18 @@ public class AdPosition extends BaseAdPosition<AdPosition> {
      */
     @JSONField(serialize=false)  
     private List<Ad> ads;
-	
+
+
+	@JSONField(serialize=false)
+	private List<Ad> enableAds;
+
+	public List<Ad> getEnableAds() {
+		if(enableAds == null){
+			enableAds = new Ad().dao().find("select * from kf_ad where adPositionId=? and isEnabled = 1",getId());
+		}
+		return enableAds;
+	}
+
 	/**
 	 * 查找所有广告位
 	 * 

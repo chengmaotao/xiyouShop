@@ -8,6 +8,8 @@ import com.cms.entity.Order;
 import com.cms.routes.RouteMapping;
 import com.jfinal.kit.PropKit;
 
+import java.math.BigDecimal;
+
 
 /**
  * Controller - 订单
@@ -40,6 +42,17 @@ public class OrderController extends BaseController{
     public void detail(){
         Long id = getParaToLong(0);
         Order order = new Order().dao().findById(id);
+
+		String delivery = PropKit.get("delivery");
+		String deliveryFee = PropKit.get("deliveryFee");
+
+		BigDecimal totalPrice = order.getTotalPrice();
+		setAttr("hasDeliveryFee",false);
+		if(totalPrice.compareTo(new BigDecimal(delivery)) < 0){
+			setAttr("hasDeliveryFee",true);
+			setAttr("deliveryFee",deliveryFee);
+		}
+
         setAttr("order", order);
         render("/templates/"+getTheme()+"/"+getDevice()+"/memberOrderDetail.html");
     }

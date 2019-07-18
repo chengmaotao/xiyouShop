@@ -131,7 +131,6 @@ function changeQuantity(productId,operate){
 		cartItemNum.val(Number(cartItemNum.val())+1);
 		cartItemNum.attr("data",Number(cartItemNum.val())+1)
 	}else if("-"==operate && Number(cartItemNum.val()) > 1){
-        console.log(11111);
 		cartItemNum.val(Number(cartItemNum.val())-1);
 		cartItemNum.attr("data",Number(Number(cartItemNum.val())-1));
 	}

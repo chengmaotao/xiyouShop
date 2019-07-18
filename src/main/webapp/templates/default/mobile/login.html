@@ -27,7 +27,7 @@
 <div>
 	<div style="line-height:44px; height:44px; width:100%"></div>
 	<div class="space15"></div>
-    <div class="connerdiv" style="font-size:14px;color:#000000;text-align:left;padding:0px 8px;">注册后可享受红包积分等优惠
+    <div class="connerdiv" style="font-size:14px;color:#000000;text-align:left;padding:0px 8px;">
 		<ul id="switch-title">
 	        <li onclick="javascript:location.href='${base}/login';" class="on-hit">登录</li>
 	        <li onclick="javascript:location.href='${base}/register';" id="zhuce">注册</li>
@@ -35,12 +35,16 @@
 		<div style="clear:both;"></div>
     </div>
  	<div class="connerdiv" id="account-div">
-    	<form id="inputForm" action="${base}/login" method="post">
+    	<form id="inputForm" action="${base}/login/login" method="post">
       		<dl class="connerbox">
         		<dd><span class="form_hd">手机：</span><span class="form_td"><input type="text" id="username" name="username" value="" maxlength="50"  placeholder="请输入手机" class="text_input"></span></dd>
         		<dd id="service-pwd" class="pwd"><span class="form_hd">密码：</span><span class="form_td"><input type="password" id="pwd" name="password" value="" maxlength="50" placeholder="请输入密码" class="text_input" /></span></dd>
       		</dl>
-      		<dl id="tips" style="color:#da4f49; text-align:center; font-weight:bold;"></dl>
+      		<dl id="tips" style="color:#da4f49; text-align:center; font-weight:bold;">
+				[#if feedback??]
+				${feedback.msg}
+				[/#if]
+			</dl>
       		<div class="space15"></div>
       		<input name="btnLogin" type="submit" value="登录" class="btn_red" />
       		<div class="space15"></div>

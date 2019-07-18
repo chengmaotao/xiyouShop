@@ -48,7 +48,7 @@ $(document).ready(function () {
 				<div class="bt_box_tr fr">
 					<div class="bt_logo">
 						
-						<a href="javascript:collect(236)" class="bt_like" id="J_myFavBrand"></a>
+						<!--<a href="javascript:collect(236)" class="bt_like" id="J_myFavBrand"></a>-->
 					</div>
 				</div>
 			</div>
@@ -89,7 +89,7 @@ $(document).ready(function () {
 								</div>
 								<span class="bt_counts">数量：</span>
 								<span id="NumberLeftBtn" onClick="changeInput('-')" class="bt_count_reduce J_num_act_reduce"></span>
-								<input name="number" type="text" id="number" value="1" class="bt_count_txt J_pro_num_txt" onblur="changePrice()" />
+								<input name="number" type="text" id="number" value="1" class="bt_count_txt J_pro_num_txt" onblur="checkNumber(this)" />
 								<span id="NumberRightBtn" onClick="changeInput('+')" class="bt_count_add J_num_act_add"></span>
 								<div>
 									<button id="J_mer_saleTag" class="bt_add_car" type="button" onclick="javascript:addToCart(${product.id},2);" value=""></button>
@@ -172,6 +172,17 @@ $(document).ready(function () {
 	</div>
 </div>
 <script type="text/javascript">
+
+	function checkNumber(obj) {
+		var val = obj.value;
+
+        var reg = /^\+?[1-9][0-9]*$/;　　//正整数
+        if(!reg.test(val)){
+            alert("请输入数字!")
+            return;
+        }
+    }
+
 function changeInput(type){
     var $inputLeft = document.getElementById('NumberLeftBtn');
     var $inputRight = document.getElementById('NumberRightBtn');

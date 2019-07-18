@@ -1,5 +1,6 @@
 package com.cms.controller.front;
 
+import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.Page;
 import org.apache.commons.lang.BooleanUtils;
 
@@ -29,6 +30,13 @@ public class ProductController extends BaseController{
             return;
         }
         setAttr("product", product);
+
+		String delivery = PropKit.get("delivery");
+		String deliveryFee = PropKit.get("deliveryFee");
+
+		setAttr("delivery",delivery);
+		setAttr("deliveryFee",deliveryFee);
+
 		render("/templates/"+getTheme()+"/"+getDevice()+"/productDetail.html");
 	}
 	
@@ -69,6 +77,13 @@ public class ProductController extends BaseController{
 		setAttr("keyword", keyword);
 		String requestURI = getRequest().getRequestURI();
 		setAttr("requestUrl",requestURI);
+
+		String delivery = PropKit.get("delivery");
+		String deliveryFee = PropKit.get("deliveryFee");
+
+		setAttr("delivery",delivery);
+		setAttr("deliveryFee",deliveryFee);
+
 		render("/templates/"+getTheme()+"/"+getDevice()+"/productSearch.html");
 	}
 

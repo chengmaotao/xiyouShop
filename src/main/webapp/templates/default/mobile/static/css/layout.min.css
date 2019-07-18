@@ -3,7 +3,7 @@
 
 body {
     background: none repeat scroll 0 0 #E8E8E8;
-    color: #858585;
+   /* color: #858585;*/
     font-family: Arial,"microsoft yahei",Verdana;
     font-size: 12px;
     margin: 0;
@@ -1786,6 +1786,11 @@ em.sm {
     padding: 10px;
     position: relative;
 }
+
+.bottomdiv .inner2 {
+    text-align:right;
+}
+
 .bottomdiv .inner .lmask {
     background-color: rgba(255, 255, 255, 0.4);
     color: #FFFFFF;
@@ -2001,7 +2006,7 @@ em.sm {
     background: none repeat scroll 0 0 #FFFFFF;
     border-radius: 4px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-    /* margin: 0 7px 10px; */
+    margin: 0 0px 103px;
 }
 .cartlist {
     padding: 8px 6px 0;
@@ -2010,6 +2015,19 @@ em.sm {
 .cartlist:last-child {
     border-bottom: medium none;
 }
+
+.newlast-child3:last-child{
+    margin-bottom: 162px;
+}
+
+.newlast-child1:last-child{
+    margin-bottom: 110px;
+}
+
+.newlast-child2:last-child {
+    margin-bottom: 100px;
+}
+
 .cartlistinner {
     border-bottom: 1px dashed #CFCFCF;
     min-height: 101px;
@@ -3564,6 +3582,7 @@ span.tit_h {
     padding: 10px;
     position: relative;
 }
+
 .flow_carticon {
     background-position: -145px -95px;
     display: block;
@@ -3611,7 +3630,7 @@ span.tit_h {
 }
 .space10 {
     clear: both;
-    height: 10px;
+    height: 4px;
     overflow: hidden;
 }
 .phoneimg {
