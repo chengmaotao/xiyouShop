@@ -10,10 +10,10 @@
 	<config name="theme" value="default" />
     <config name="largeProductImageWidth" value="310" />
     <config name="largeProductImageHeight" value="180" />
-    <config name="mediumProductImageWidth" value="235" />
-    <config name="mediumProductImageHeight" value="137" />
-    <config name="thumbnailProductImageWidth" value="110" />
-    <config name="thumbnailProductImageHeight" value="64" />
+    <config name="mediumProductImageWidth" value="248" />
+    <config name="mediumProductImageHeight" value="144" />
+    <config name="thumbnailProductImageWidth" value="124" />
+    <config name="thumbnailProductImageHeight" value="72" />
     <config name="defaultLargeProductImage" value="/upload/image/default_large.jpg" />
     <config name="defaultMediumProductImage" value="/upload/image/default_medium.jpg" />
     <config name="defaultThumbnailProductImage" value="/upload/image/default_thumbnail.jpg" />

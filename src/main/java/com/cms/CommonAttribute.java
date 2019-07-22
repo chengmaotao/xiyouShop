@@ -237,7 +237,7 @@ public final class CommonAttribute {
      * 支付方式
      */
     
-    /** 支付宝 */
+    /** 支付宝-电脑网站 */
     public static final String PAYMENT_METHOD_ALIPAY="alipay";
     
     /** 微信 */

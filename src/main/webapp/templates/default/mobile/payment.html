@@ -13,6 +13,7 @@
 <script type="text/javascript" src="${base}/templates/${config.theme}/mobile/static/js/jquery.js"></script>
 <script type="text/javascript" src="${base}/templates/${config.theme}/mobile/static/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="${base}/templates/${config.theme}/mobile/static/js/ajax.js"></script>
+<script type="text/javascript" src="${base}/templates/${config.theme}/mobile/static/js/js-base64.js"></script>
 </head>
 <body>
 <header id="header" class="header clearfix">
@@ -27,10 +28,15 @@
              <p>订&nbsp;&nbsp;单&nbsp;&nbsp;号：${order.sn}</p>
              <p>订单金额：<span class="order_money">￥${order.totalPrice}</span></p>
              <!--<p>配送方式: ${order.shippingMethodName}</p>-->
+             <div id="alipayForm" >
+
+             </div>
          </li>
     </ul>
     <form action="${base}/payment/pay" method="post" id="inputForm">
-        <input type="hidden" name="orderId" value="${order.id}">
+        <input type="hidden" name="orderId" value="${order.id}" id="orderId">
+        <input type="hidden" name="paySource" value="wap" id="paySource">
+        <!--<input type="hidden" name="browsertype" value="" id="browsertype">-->
         <ul class="oldAddress">
 	         <li>
 	            <!-- <p><input type="radio" name="paymentMethod" value="weixin" id="weixin" checked/><label for="weixin">微信支付</label></p>-->
@@ -46,11 +52,54 @@
  </div>
  </body>
  </html>
+  <script type="text/javascript" src="${base}/ap.js"></script>
   <script type="text/javascript">
  $(document).ready(function() {
-     
-     $("#btnOrder").on("click",function(){
-         $('#inputForm').submit();
-     });
+
+     var is_weixin = (function(){return navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1})();
+     if(is_weixin){
+         $("#btnOrder").on("click",function(){
+             //$('#inputForm').submit();
+             $.ajax({
+                 url: "${base}/payment/payByWxBrowser",
+                 type: "POST",
+                 data: {
+                     orderId: $('#orderId').val(),
+                     paySource: $('#paySource').val(),
+                     paymentMethod: $('#alipay').val()
+                 },
+                 dataType: "json",
+                 success: function(data) {
+
+                     if (data.type == "success") {
+                         var form = data.data;
+                         form = Base64.decode(form);
+                         form = form.slice(0,-45);
+                         $("#alipayForm").append(form);
+                         $("#alipayForm script").remove();
+                         var queryParam = '';
+                         Array.prototype.slice.call(document.querySelectorAll("input[type=hidden]")).forEach(function (ele) {
+                             if(ele.id == 'orderId' || ele.id == 'paySource'){
+
+                             }else{
+                                 queryParam += ele.name + "=" + encodeURIComponent(ele.value) + '&';
+                             }
+                         });
+                         var url = document.getElementsByName("punchout_form")[0].action+'&'+queryParam;
+                         _AP.pay(url);
+                     }else if(data.type == "paymented"){
+                         window.location.href='${base}/member/order/detail/' + $('#orderId').val();
+                     }
+                 }
+             });
+
+         });
+
+
+     }else{
+         $("#btnOrder").on("click",function(){
+             $('#inputForm').submit();
+         });
+     }
  });
  </script>

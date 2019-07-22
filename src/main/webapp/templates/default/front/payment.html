@@ -100,9 +100,7 @@
          $("#payId").on("click",function(){
              var paymentMethod = $("input[name='paymentMethod']:checked").val();
 			 var orderId = $("#hidOrderId").val();
-			 console.log("paymentMethod:" + paymentMethod);
-             console.log("orderId:" + orderId);
-             location.href="/payment/pay?orderId=" + orderId + "&paymentMethod=" + paymentMethod;
+             location.href="/payment/pay?orderId=" + orderId + "&paymentMethod=" + paymentMethod + "&paySource=web";
          });
 
      });

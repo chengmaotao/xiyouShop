@@ -28,4 +28,5 @@ public class IndexController extends BaseController {
 
         render("/templates/" + getTheme() + "/" + getDevice() + "/index.html");
     }
+
 }

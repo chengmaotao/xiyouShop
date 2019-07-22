@@ -70,6 +70,16 @@ public class OrderController extends BaseController{
 		Member currentMember = getCurrentMember();
 		Cart currentCart = getCurrentCart();
 
+		List<CartItem>  cartItems = currentCart.getCartItems();
+
+		if(cartItems == null || cartItems.isEmpty()){
+			int pageSize = 20 ;
+			setAttr("page",new Order().dao().findPage(1,pageSize,currentMember.getId(),null));
+
+			render("/templates/"+getTheme()+"/"+getDevice()+"/memberOrderList.html");
+			return;
+		}
+
 		String delivery = PropKit.get("delivery");
 		String deliveryFee = PropKit.get("deliveryFee");
 
@@ -92,16 +102,7 @@ public class OrderController extends BaseController{
 		order.setStatus(CommonAttribute.ORDER_STATUS_PENDING_PAYMENT);
 		order.setMemberId(currentMember.getId());
 		order.save();
-		List<CartItem>  cartItems = currentCart.getCartItems();
 
-		if(cartItems == null || cartItems.isEmpty()){
-			int pageSize = 20 ;
-			setAttr("page",new Order().dao().findPage(1,pageSize,currentMember.getId(),null));
-
-
-			render("/templates/"+getTheme()+"/"+getDevice()+"/memberOrderList.html");
-			return;
-		}
 
 		for(CartItem cartItem:cartItems){
 			OrderItem orderItem = new OrderItem();
