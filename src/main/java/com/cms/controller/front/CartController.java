@@ -51,7 +51,7 @@ public class CartController extends BaseController{
             Map<String,Object> productData = new HashMap<>();
             productData.put("path", product.getPath());
             productData.put("name", product.getName());
-            productData.put("image", product.getImage());
+            productData.put("image", product.getProductImages().getMinimum());
             productData.put("price", product.getPrice());
             productData.put("productId",product.getId());
             cartItemData.put("product", productData);

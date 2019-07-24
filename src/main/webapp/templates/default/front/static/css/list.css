@@ -671,8 +671,10 @@
 }
 
 .pro_list_pic {
-	width: 235px;
-	height: 137px;
+	/* width: 235px;
+	height: 137px;*/
+	width: 248px;
+	height: 144px;
 	position: relative;
 	margin-bottom: 8px;
 	overflow: hidden;

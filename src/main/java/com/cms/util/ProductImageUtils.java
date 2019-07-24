@@ -56,7 +56,7 @@ public class ProductImageUtils {
 	 * @param contentType
 	 *            原文件类型
 	 */
-	private static void addTask(final StoragePlugin storagePlugin, final String sourcePath, final String largePath, final String mediumPath, final String thumbnailPath, final File tempFile, final String contentType) {
+	private static void addTask(final StoragePlugin storagePlugin, final String sourcePath, final String largePath, final String mediumPath, final String thumbnailPath,final String minimumPath, final File tempFile, final String contentType) {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -65,21 +65,30 @@ public class ProductImageUtils {
 				File largeTempFile = new File(FileUtils.getTempDirectory(), UUID.randomUUID() + "." + DEST_EXTENSION);
 				File mediumTempFile = new File(FileUtils.getTempDirectory(), UUID.randomUUID() + "." + DEST_EXTENSION);
 				File thumbnailTempFile = new File(FileUtils.getTempDirectory(), UUID.randomUUID() + "." + DEST_EXTENSION);
+
+				File minimumTempFile = new File(FileUtils.getTempDirectory(), UUID.randomUUID() + "." + DEST_EXTENSION);
+
 				try {
 					ImageUtils.zoom(tempFile, largeTempFile, config.getLargeProductImageWidth(), config.getLargeProductImageHeight());
-					ImageUtils.addWatermark(largeTempFile, largeTempFile, watermarkFile, config.getWatermarkPosition(), config.getWatermarkAlpha());
+					// 不加水印
+					//ImageUtils.addWatermark(largeTempFile, largeTempFile, watermarkFile, config.getWatermarkPosition(), config.getWatermarkAlpha());
 					ImageUtils.zoom(tempFile, mediumTempFile, config.getMediumProductImageWidth(), config.getMediumProductImageHeight());
-					ImageUtils.addWatermark(mediumTempFile, mediumTempFile, watermarkFile, config.getWatermarkPosition(), config.getWatermarkAlpha());
+					//ImageUtils.addWatermark(mediumTempFile, mediumTempFile, watermarkFile, config.getWatermarkPosition(), config.getWatermarkAlpha());
 					ImageUtils.zoom(tempFile, thumbnailTempFile, config.getThumbnailProductImageWidth(), config.getThumbnailProductImageHeight());
+
+					ImageUtils.zoom(tempFile, minimumTempFile, config.getMinimumProductImageWidth(), config.getMinimumProductImageHeight());
+
 					storagePlugin.upload(sourcePath, tempFile, contentType);
 					storagePlugin.upload(largePath, largeTempFile, DEST_CONTENT_TYPE);
 					storagePlugin.upload(mediumPath, mediumTempFile, DEST_CONTENT_TYPE);
 					storagePlugin.upload(thumbnailPath, thumbnailTempFile, DEST_CONTENT_TYPE);
+					storagePlugin.upload(minimumPath, minimumTempFile, DEST_CONTENT_TYPE);
 				} finally {
 					FileUtils.deleteQuietly(tempFile);
 					FileUtils.deleteQuietly(largeTempFile);
 					FileUtils.deleteQuietly(mediumTempFile);
 					FileUtils.deleteQuietly(thumbnailTempFile);
+					FileUtils.deleteQuietly(minimumTempFile);
 				}
 			}
 		});
@@ -102,14 +111,18 @@ public class ProductImageUtils {
 			String largePath = uploadPath + uuid + "-large." + DEST_EXTENSION;
 			String mediumPath = uploadPath + uuid + "-medium." + DEST_EXTENSION;
 			String thumbnailPath = uploadPath + uuid + "-thumbnail." + DEST_EXTENSION;
+			String minimumPath = uploadPath + uuid + "-minimum." + DEST_EXTENSION;
+
 			for (StoragePlugin storagePlugin : new StoragePlugin().dao().findList(true)) {
 				File tempFile = new File(FileUtils.getTempDirectory(), UUID.randomUUID() + ".tmp");
 				FileUtils.copyFile(uploadFile.getFile(), tempFile);
-				addTask(storagePlugin, sourcePath, largePath, mediumPath, thumbnailPath, tempFile, uploadFile.getContentType());
+				addTask(storagePlugin, sourcePath, largePath, mediumPath, thumbnailPath,minimumPath, tempFile, uploadFile.getContentType());
+
 				productImage.setSource(storagePlugin.getUrl(sourcePath));
 				productImage.setLarge(storagePlugin.getUrl(largePath));
 				productImage.setMedium(storagePlugin.getUrl(mediumPath));
 				productImage.setThumbnail(storagePlugin.getUrl(thumbnailPath));
+				productImage.setMinimum(storagePlugin.getUrl(minimumPath));
 				break;
 			}
 		} catch (IllegalStateException e) {

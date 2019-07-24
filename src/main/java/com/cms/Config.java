@@ -45,6 +45,13 @@ public class Config implements Serializable {
     /** 商品缩略图高度 */
     private Integer thumbnailProductImageHeight;
 
+	/** 商品最小图宽度 */
+	private Integer minimumProductImageWidth;
+
+	/** 商品最小图高度 */
+	private Integer minimumProductImageHeight;
+
+
     /** 默认商品图片(大) */
     private String defaultLargeProductImage;
 
@@ -634,4 +641,20 @@ public class Config implements Serializable {
     public void setSmsSignName(String smsSignName) {
         this.smsSignName = smsSignName;
     }
+
+	public Integer getMinimumProductImageWidth() {
+		return minimumProductImageWidth;
+	}
+
+	public void setMinimumProductImageWidth(Integer minimumProductImageWidth) {
+		this.minimumProductImageWidth = minimumProductImageWidth;
+	}
+
+	public Integer getMinimumProductImageHeight() {
+		return minimumProductImageHeight;
+	}
+
+	public void setMinimumProductImageHeight(Integer minimumProductImageHeight) {
+		this.minimumProductImageHeight = minimumProductImageHeight;
+	}
 }

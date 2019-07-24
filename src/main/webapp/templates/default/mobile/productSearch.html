@@ -38,7 +38,7 @@
 								[#list page.list as product]
 								<dd style="width:100%">
 									<div class="tupian">
-										<a href="${base}${product.path}"><img src="${product.image}"/></a>
+										<a href="${base}${product.path}"><img src="${product.productImages.minimum}"/></a>
 										<div class="add">
 		                                    <h3><a href="${base}${product.path}">${product.name}</a></h3>
 		                                    <em>￥${product.price}元<del>￥${product.marketPrice}元</del></em>

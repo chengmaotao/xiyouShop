@@ -96,7 +96,7 @@ nav a:nth-child(8):before{background-position:-7px -322px;}
 .prolist{float:left;width:75%;height:100%;background-color:#fff;overflow:auto;}
 .prolist ul{margin:0 10px;}
 .prolist li{overflow:hidden;border-bottom:1px solid #dedede;padding:5px 0;position:relative;}
-.prolist li img{float:left;max-width:60px;margin-right:10px;}
+.prolist li img{float:left;max-width:62px;margin-right:10px;}
 .prolist li .promsg{line-height:1.6em;font-size:1.2em;overflow:hidden;}
 .prolist li .promsg h2{overflow:hidden;}
 .prolist li .promsg h2 a{font-size:1.2em;color:#000;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}

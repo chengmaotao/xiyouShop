@@ -52,20 +52,22 @@
 							<table class="shop_list_tab">
 								[#list currentCart.cartItems as cartItem]
 									<tr id="cart_item_${cartItem.product.id}" class="J_goods_item" >
-										<td width="49">
+										<td width="62">
 											<a href="${cartItem.product.path}" target="_blank" class="pro_img_box">
-												<img src="${cartItem.product.image}" border="0" title="${cartItem.product.name}" width="49" height="62" alt=""  />
+												<img src="${cartItem.product.productImages.thumbnail}" border="0" title="${cartItem.product.name}" width="62" height="36" alt=""  />
 												<span class="por_big_img">
 													<i class="left_arrow"></i>
-													<img src="${cartItem.product.image}" width="190" height="240" alt="" />
+													<img src="${cartItem.product.productImages.thumbnail}" width="124" height="72" alt="" />
 												</span>
 											</a>
 										</td>
-										<td class="pro_tit gray" width="430">
+										<td class="pro_tit gray" width="417">
 											<a href="${cartItem.product.path}"  class="gray">${cartItem.product.name}</a>
 				                       	</td>
-										<td width="160" class="f14">${cartItem.product.price}<br />
+										<td width="160" class="f14">
 				                   			<del>￥${cartItem.product.marketPrice}</del>
+											&nbsp;&nbsp;
+											${cartItem.product.price}
 				                   		</td>
 										<td width="115">
 											<div class="pro_num cart_del_confirm_box"><input type="button" onclick="changeQuantity(${cartItem.productId},'-')" class="subtract_btn fl J_cart_numSubtract" >
@@ -115,7 +117,7 @@
 			[#list products as product]
 				<dl class="pro_relate_list loaded">
 					<dt>
-						<a target="_blank" href="${base}${product.path}" ><img width="180" height="105" alt="" src="${product.image}"></a>
+						<a target="_blank" href="${base}${product.path}" ><img width="155" height="90" alt="" src="${product.productImages.medium}"></a>
 					</dt>
 					<dd>${product.name}</dd>
 					<dd><del class="pro_relate_old">￥${product.marketPrice}</del><span class="pro_relate_new hlight_main">￥${product.price}</span></dd>

@@ -2030,7 +2030,6 @@ em.sm {
 
 .cartlistinner {
     border-bottom: 1px dashed #CFCFCF;
-    min-height: 101px;
     padding: 0 5px 8px;
     position: relative;
 }
@@ -3813,7 +3812,7 @@ span.unavailable {
 }
 .good_data_num {
     border: 1px solid #D5D5D5;
-    float: left;
+    float: right;
     height: 28px;
     overflow: hidden;
     width: 90px;

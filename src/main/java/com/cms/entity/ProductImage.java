@@ -38,6 +38,8 @@ public class ProductImage implements Serializable, Comparable<ProductImage> {
 	/** 缩略图 */
 	private String thumbnail;
 
+	private String minimum;
+
 	/** 排序 */
 	private Integer sort;
 	
@@ -185,7 +187,7 @@ public class ProductImage implements Serializable, Comparable<ProductImage> {
 	 */
 	@JSONField(serialize = false)
 	public boolean isEmpty() {
-		return (getFile() == null || getFile().getFile().length()==0) && (StringUtils.isEmpty(getSource()) || StringUtils.isEmpty(getLarge()) || StringUtils.isEmpty(getMedium()) || StringUtils.isEmpty(getThumbnail()));
+		return (getFile() == null || getFile().getFile().length()==0) && (StringUtils.isEmpty(getSource()) || StringUtils.isEmpty(getLarge()) || StringUtils.isEmpty(getMedium()) || StringUtils.isEmpty(getThumbnail())|| StringUtils.isEmpty(getMinimum()));
 	}
 
 	/**
@@ -202,4 +204,11 @@ public class ProductImage implements Serializable, Comparable<ProductImage> {
 		return new CompareToBuilder().append(getSort(), productImage.getSort()).toComparison();
 	}
 
+	public String getMinimum() {
+		return minimum;
+	}
+
+	public void setMinimum(String minimum) {
+		this.minimum = minimum;
+	}
 }

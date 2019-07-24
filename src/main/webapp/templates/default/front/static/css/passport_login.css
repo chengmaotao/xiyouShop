@@ -41,7 +41,7 @@ body { background: #f3f1f4; font-family: "Microsoft Yahei",Arial,Thoma,sans-seri
 .layout { width: 1000px; margin: 40px auto;}
 .header { overflow: hidden; zoom:1; margin-bottom: 44px; }
 .spritecmt { background-image:url(../images/sprite.png?20140514-1635); background-repeat: no-repeat;}
-a.logo { float: left; width: 283px; height: 53px; background-image:url(../images/logo.png); background-repeat: no-repeat; }
+a.logo { float: left; width: 261px; height: 53px; background-image:url(../images/logo.png); background-repeat: no-repeat; }
 .bannerHeader { float: right; width: 445px; height: 28px; background-position: 0 -68px; margin-top: 25px; }
 .content.reg{ width: 840px; height: 450px; background: #fff; border:solid 1px #e3e2e4; padding: 30px 0 50px 0;  margin: 0 auto; }
 .regForm { width: 344px; float: left; border-right:dotted 1px #bfbfbf; margin:0 20px 0 75px; display: inline; overflow: hidden; zoom:1; }

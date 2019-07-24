@@ -175,7 +175,7 @@
 
 .bt_infos_r_t {
 	width: 359px;
-	height: 65px;
+	height: 55px;
 	text-align: center;
 	position: relative
 }
@@ -185,7 +185,7 @@
 	left: 0;
 	top: 0;
 	width: 364px;
-	height: 65px;
+	height: 55px;
 	background: #6bc30d
 }
 
@@ -197,12 +197,11 @@
 
 .bt_infos_price {
 	font-size: 21px;
-	margin-right: 10px;
-	margin-top: 6px
+	margin-right: 10px
 }
 
 .bt_infos_price b {
-	font-size: 48px;
+	font-size: 40px;
 	font-family: Arial
 }
 
@@ -226,7 +225,7 @@
 .bt_price_list {
 	width: 340px;
 	margin: 15px auto 0;
-	height: 42px;
+	height: 35px;
 	line-height: 21px;
 	padding: 0 0 15px;
 	border-bottom: 1px dotted #C3C3C3;
@@ -798,7 +797,7 @@
 
 .bt_looked_img {
 	float: left;
-	margin-right: 5px
+	margin-right: 10px
 }
 
 .bt_looked_name {
@@ -895,8 +894,6 @@
 	position: absolute;
 	right: 0;
 	top: 0;
-	width: 240px;
-	height: 139px;
 	border: 1px solid #CCC
 }
 
@@ -1140,37 +1137,37 @@
 }
 
 .w960 .bt_infos_l {
-	width: 690px
+	width: 620px
 }
 
 .w960 .bt_infos_r {
-	width: 270px
+	width: 340px
 }
 
 .w960 .bt_good_img {
-	width: 690px;
-	height: 400px
+	width: 620px;
+	height: 320px
 }
 
 .w960 .bt_infos_r_t {
-	width: 270px
+	width: 340px
 }
 
 .w960 .bt_infos_r_con {
-	width: 275px
+	width: 340px
 }
 
 .w960 .bt_price_list {
-	width: 250px;
-	padding: 0 0 15px
+	width: 320px;
+	padding: 0 0 10px
 }
 
 .w960 .bt_price_list li {
-	width: 82px
+	width: 105px
 }
 
 .w960 .bt_infos_r_m {
-	height: 125px
+	height: 100px
 }
 
 .w960 .bt_buy_num {
@@ -1191,8 +1188,8 @@
 }
 
 .w960 .bt_infos_r_b {
-	padding-top: 25px;
-	height: 112px
+	padding-top: 8px;
+	height: 96px
 }
 
 .w960 .bt_add_car {

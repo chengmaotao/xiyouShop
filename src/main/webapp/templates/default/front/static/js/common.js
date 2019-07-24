@@ -53,12 +53,12 @@ function showCart(data){
 		 var cartItem=data.cartItems[d];
 		 html += '<li class="cs_list_item J_cart_item_dd">';
 		 html += '<dl>';
-		 html += '<dt class="cs_list_img"><a target="_blank" href="'+cartItem.product.path+'"><img width="47" height="60" alt="'+cartItem.product.name+'" src="'+cartItem.product.image+'"></a></dt>';
+		 html += '<dt class="cs_list_img"><a target="_blank" href="'+cartItem.product.path+'"><img alt="'+cartItem.product.name+'" src="'+cartItem.product.image+'"></a></dt>';
 		 html += '<dd class="cs_list_title">';
 		 html += '<p class="cs_list_name"><a target="_blank" href="'+cartItem.product.path+'">'+cartItem.product.name+'</a></p>';
 		 html += '<p></p>';
 		 html += '</dd>';
-		 html += '<dd class="cs_list_price"><span>￥'+cartItem.product.price+'</span>Χ<em>'+cartItem.quantity+'</em><i class="del-goods" title="删除" alt="删除" onclick="javascript:deleteCartItem('+cartItem.id+',\'ajax\');">删除</i></dd>';
+		 html += '<dd class="cs_list_price"><span>￥'+cartItem.product.price+'</span> * <em>'+cartItem.quantity+'</em><i class="del-goods" title="删除" alt="删除" onclick="javascript:deleteCartItem('+cartItem.id+',\'ajax\');">删除</i></dd>';
 		 html += '</dl>';
 		 html += '</li>';
 	 }

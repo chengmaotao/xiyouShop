@@ -14,6 +14,10 @@
     <config name="mediumProductImageHeight" value="144" />
     <config name="thumbnailProductImageWidth" value="124" />
     <config name="thumbnailProductImageHeight" value="72" />
+
+    <config name="minimumProductImageWidth" value="62" />
+    <config name="minimumProductImageHeight" value="36" />
+
     <config name="defaultLargeProductImage" value="/upload/image/default_large.jpg" />
     <config name="defaultMediumProductImage" value="/upload/image/default_medium.jpg" />
     <config name="defaultThumbnailProductImage" value="/upload/image/default_thumbnail.jpg" />

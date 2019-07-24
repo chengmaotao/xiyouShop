@@ -37,7 +37,7 @@
                 <div class="pro_slide" id="scroll_img">
 		<ul>
 		[#list adPosition.enableAds as ad]
-		<li><a href="${ad.url}"><img src="${ad.image}" width="720"/></a></li>
+		<li><a href="${ad.url}"><img src="${ad.image}"/></a></li>
 		[/#list]
 		</ul>
 		<ol id='scroll_num'>
@@ -66,12 +66,6 @@
           [/@ad_position]
 		<!--scroll-->
 		<nav>
-<!--            <a href="javascript:void(0)" onClick="fenlei(0)">叶菜类</a>
-            <a href="javascript:void(0)" onClick="fenlei(1)">瓜果类</a>
-            <a href="javascript:void(0)" onClick="fenlei(2)">根茎类</a>
-            <a href="javascript:void(0)" onClick="fenlei(0)" id="fenlei">商品分类</a>-->
-
-
 			[@product_category_root_list count=3 ]
 				[#list productCategories as productCategorie]
 					<a href="javascript:void(0)" onClick="fenlei(${productCategorie_index})">${productCategorie.name}</a>
@@ -79,25 +73,15 @@
 			[/@product_category_root_list]
 			<a href="javascript:void(0)" onClick="fenlei(0)" id="fenlei">商品分类</a>
 		</nav>
-<!--		<ul class="ad_chart">
-			[@ad_position id = 4]
-                    [#list adPosition.enableAds as ad]
-					<li><a href="${ad.url}"><img src="${ad.image}"/></a></li>
-					[/#list]
-            [/@ad_position]
-		</ul>-->
 		<div class="hotBuy">
 			<h2>西柚热卖</h2>
 			<ul>
 				[@product_list count=9 orderBy="sales desc" ]
 					[#list products as product]
 						<li>
-							<a href="${base}${product.path}"><img src="${product.image}" alt=""/></a>
+							<a href="${base}${product.path}"><img src="${product.productImages.thumbnail}" alt=""/></a>
 							<a href="${base}${product.path}">${product.name}</a>
 							<div class="pronum">
-<!--								<a id="hotReduceProduct_${product.id}" onClick="hotReduceProduct('${product.id}');" style="display: none"></a>
-						        <span id="hotProductQuantity_${product.id}" class="count"></span>-->
-								<!--<input type="hidden" id="hotProductQuantity_${product.id}">-->
 								<a style="display: none"></a>
 						        <a id="hotAddProduct_${product.id}" onClick="hotAddProduct('${product.id}');"></a>
 							</div>
@@ -121,24 +105,11 @@
 		</div>
 		<div class="category">
 			<ul>
-<!--				<li val="1"><a href="javascript:;">叶菜类</a></li>
-				<li val="2"><a href="javascript:;">瓜果类</a></li>
-				<li val="3"><a href="javascript:;">根茎类</a></li>
-				<li val="4"><a href="javascript:;">菌菇类</a></li>
-				<li val="5"><a href="javascript:;">肉禽蛋</a></li>
-				<li val="6"><a href="javascript:;">海　鲜</a></li>
-				<li val="7"><a href="javascript:;">水　果</a></li>
-				<li val="8"><a href="javascript:;">豆制品</a></li>
-				<li val="9"><a href="javascript:;">粮　油</a></li>
-				<li val="10"><a href="javascript:;">干货汤品</a></li>
-				<li val="11"><a href="javascript:;">奶制品</a></li>	-->
-
 				[@product_category_root_list count=30 ]
 					[#list productCategories as productCategorie]
 						<li val="${productCategorie.id}"><a href="javascript:;">${productCategorie.name}</a></li>
 					[/#list]
 				[/@product_category_root_list]
-
 			</ul>
 		</div>
 		<div class="prolist">
@@ -248,32 +219,26 @@
                      {"productId":productId,"quantity":quantity,"type":1}, 'POST',null,'json',
                      function(data){
                          if(data.productQuantity<=0){
-                            /* $("#hotReduceProduct_"+productId).css("display","none");*/
-                            /* $("#hotProductQuantity_"+productId).html("");*/
                              $("#cartQuantity").html(data.quantity);
                          }else{
-                            /* $("#hotProductQuantity_"+productId).html(data.productQuantity);*/
                              $("#cartQuantity").html(data.quantity);
                          }
-
                          loadCart();
                      });
         }
         
         function hotAddProduct(productId){
-           /* $("#hotReduceProduct_"+productId).css("display","");*/
-
             hotUpdateQuantity(productId,1);
         }
         
 
 	$(function(){
-
-
 		$(".category li").eq(0).addClass("cur").siblings().removeAttr("class");
 		$(".meunTab li").click(function(){
 			$(this).addClass("cur").siblings().removeAttr("class");
 			$(".index_warp").eq($(this).index()).show().siblings(".index_warp").hide();
+
+            $(".category li").eq(0).click();
 		})
 		loadCart();
 	})

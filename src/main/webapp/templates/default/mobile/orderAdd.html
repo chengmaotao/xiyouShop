@@ -50,19 +50,14 @@
                 <div class="space10"></div>
                 <div class="cartlistinner clearfix"> 
                 <a href="${base}${cartItem.product.path}" class="cart_orderlist_i">
-                    <img salt="${cartItem.product.name}" src="${cartItem.product.image}" width="80" height="101"> 
+                    <img salt="${cartItem.product.name}" src="${cartItem.product.productImages.minimum}">
                 </a>
                 <div class="cart_orderlist_info"> 
                     <a href="${base}${cartItem.product.path}">
                         <p class="cart_g_name">${cartItem.product.name}</p>
                         <p class="cart_b_name"></p>
-                        <p class="fontred">￥${cartItem.product.price}</p>
-                        <p class="space5"></p>
+                        <span class="fontred">￥${cartItem.product.price}</span> * ${cartItem.quantity}
                     </a>
-                    <div class="space5"></div>
-                    <div class="goods_Cnum clearfix" id="goods_Cnum">
-                        数量 ${cartItem.quantity}
-                    </div>
                 </div>
                 <a class="cart_orderlist_p" style="display:block"> 
                     <span class="c_price" id="subtotal_${product.id}"> ￥${cartItem.subtotal}</span>

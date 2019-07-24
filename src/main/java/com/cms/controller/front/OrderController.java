@@ -112,7 +112,7 @@ public class OrderController extends BaseController{
 			orderItem.setPrice(cartItem.getPrice());
 			orderItem.setQuantity(cartItem.getQuantity());
 			orderItem.setSn(cartItem.getProduct().getSn());
-			orderItem.setImage(cartItem.getProduct().getImage());
+			orderItem.setImage(cartItem.getProduct().getProductImages().getMinimum());
 			orderItem.setOrderId(order.getId());
 			orderItem.setProductId(cartItem.getProductId());
 			orderItem.save();

@@ -691,8 +691,6 @@ li.ht_weibo {
 .cs_list_img {
     border: 1px solid #CCCCCC;
     float: left;
-    height: 60px;
-    width: 47px;
 }
 .cs_list_title {
     float: left;
@@ -704,7 +702,6 @@ li.ht_weibo {
 }
 .cs_list_title p.cs_list_name {
     color: #666666;
-    height: 35px;
     line-height: 1.5;
     overflow: hidden;
 }
