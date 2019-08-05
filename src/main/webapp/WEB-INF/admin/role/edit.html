@@ -39,6 +39,11 @@
 									<label class="m-r">
 										<input class="checkbox" type="checkbox" name="permissions" value="/admin/product" [#if role.permissions?seq_contains("/admin/product")] checked="checked"[/#if]/>商品管理
 									</label>
+
+									 <label class="m-r">
+										 <input class="checkbox" type="checkbox" name="permissions" value="/admin/ctc/member" [#if role.permissions?seq_contains("/admin/ctc/member")] checked="checked"[/#if]/>西柚会员
+									 </label>
+
 								</div>
 	                        </div>
 	                    </div>
