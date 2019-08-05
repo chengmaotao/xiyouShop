@@ -106,6 +106,19 @@ public final class CommonAttribute {
 		put(AD_TYPE_TEXT, "文本");
 		put(AD_TYPE_IMAGE, "图片");
 	}};
+
+	/**
+	 * 西柚会员
+	 */
+	public static final String CTC_MEMEBER_TYPE_0 = "0";
+	public static final String CTC_MEMEBER_TYPE_1 = "1";
+	public static final String CTC_MEMEBER_TYPE_2 = "2";
+
+	public static final Map ctcMemeberTypeNames = new ListOrderedMap(){{
+		put(CTC_MEMEBER_TYPE_0, "满减");
+		put(CTC_MEMEBER_TYPE_1, "打折");
+		put(CTC_MEMEBER_TYPE_2, "满减打折");
+	}};
 	
 	/**
 	 * 友情链接类型
