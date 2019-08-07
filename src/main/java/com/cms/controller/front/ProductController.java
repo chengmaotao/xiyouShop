@@ -1,5 +1,8 @@
 package com.cms.controller.front;
 
+import com.cms.Feedback;
+import com.cms.entity.CtcProduct;
+import com.cms.entity.Receiver;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.Page;
 import org.apache.commons.lang.BooleanUtils;
@@ -8,6 +11,8 @@ import com.cms.CommonAttribute;
 import com.cms.entity.Product;
 import com.cms.entity.ProductCategory;
 import com.cms.routes.RouteMapping;
+
+import java.util.List;
 
 /**
  * Controller - 商品
@@ -39,8 +44,27 @@ public class ProductController extends BaseController{
 
 		render("/templates/"+getTheme()+"/"+getDevice()+"/productDetail.html");
 	}
-	
-	
+
+
+	public void productList(){
+		Long productCategoryId = getParaToLong("cid");
+
+		Integer count = null;
+		if(productCategoryId == null ){
+			count = 40;
+		}
+
+		List<CtcProduct> productList = new CtcProduct().dao().findList(productCategoryId, null, count, " sales desc");
+		
+		if(productList == null || productList.size() == 0){
+			renderJson(Feedback.error("data is null"));
+		}else{
+			renderJson(Feedback.success(productList));
+		}
+
+	}
+
+
 	/**
 	 * 列表
 	 */

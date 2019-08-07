@@ -11,8 +11,8 @@
 /*
 .header h2 i{border-color:#fff transparent;border-width:5px 4px 0;border-style:solid solid none;display:inline-block;margin-left:5px;}
 */
-.meunTab{height:44px;background:#fff;position:fixed;left:0;top:45px;width:100%;z-index:9999;border-bottom:1px solid #dedede;}
-.meunTab li{line-height:44px;text-align:center;color:#a1a1a1;font-size:1.4em;width:50%;cursor:pointer;float:left;}
+.meunTab{height:44px;background:#fff;position:fixed;left:0;top:40px;width:100%;z-index:9999;border-bottom:1px solid #dedede;}
+.meunTab li{line-height:44px;text-align:center;color:#a1a1a1;font-size:1.4em;width:20%;cursor:pointer;float:left;}
 .meunTab li.cur{color:#2d2d2d;border-bottom:3px solid #2d2d2d;line-height:42px;}
 
 .index_warp{margin:90px 0 50px 0;background-color:#f8f8f8;display:none;}

@@ -43,6 +43,8 @@ public class _MappingKit {
 
 		arp.addMapping("ctc_member", "id", CtcMember.class);
 
+		arp.addMapping("kf_product", "id", CtcProduct.class);
+
 	}
 }
 
