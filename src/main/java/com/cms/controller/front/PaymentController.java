@@ -30,7 +30,6 @@ import java.util.Map;
  * Controller - 收款单
  */
 @RouteMapping(url = "/payment")
-
 public class PaymentController extends BaseController {
 
     // private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);

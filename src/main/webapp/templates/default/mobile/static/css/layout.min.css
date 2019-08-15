@@ -241,12 +241,12 @@ textarea#msg {
     vertical-align: middle;
 }
 .btn_red {
-    background-image:-webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #68C436), color-stop(100%, #50AD1D));
-	background-image:-webkit-linear-gradient(#68C436,#50AD1D);
-	background-image:-moz-linear-gradient(#68C436,#50AD1D);
-	background-image:-o-linear-gradient(#68C436,#50AD1D);
-	background-image:linear-gradient(#68C436,#50AD1D);
-    border: 1px solid #50AD1D;
+    background-image:-webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #750075), color-stop(100%, #750075));
+	background-image:-webkit-linear-gradient(#750075,#750075);
+	background-image:-moz-linear-gradient(#750075,#750075);
+	background-image:-o-linear-gradient(#750075,#750075);
+	background-image:linear-gradient(#750075,#750075);
+    border: 1px solid #750075;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     color: #FFFFFF;
     width: 100%;
@@ -2181,7 +2181,6 @@ em.sm {
     left: 0;
     position: absolute;
     top: 0;
-    width: 80px;
 }
 .cart_orderlist_p {
     padding: 0 0 10px;

@@ -11,9 +11,11 @@
 /*
 .header h2 i{border-color:#fff transparent;border-width:5px 4px 0;border-style:solid solid none;display:inline-block;margin-left:5px;}
 */
-.meunTab{height:44px;background:#fff;position:fixed;left:0;top:40px;width:100%;z-index:9999;border-bottom:1px solid #dedede;}
-.meunTab li{line-height:44px;text-align:center;color:#a1a1a1;font-size:1.4em;width:20%;cursor:pointer;float:left;}
-.meunTab li.cur{color:#2d2d2d;border-bottom:3px solid #2d2d2d;line-height:42px;}
+.meunTab{height:44px;background:#fff;position:fixed;left:0;top:40px;width:100%;z-index:9999;border-bottom:1px solid #dedede;overflow-x: auto;white-space: nowrap;}
+.meunTab li{line-height:44px;color:#a1a1a1;font-size:1.4em;cursor:pointer;display: inline-block;padding: 0px 10px 0px 10px}
+.meunTab li.cur{border-bottom:2px solid #750075;line-height:32px;}
+.meunTab li.cur a{color:#750075}
+.meunTab li a{font-size: 1.3em;}
 
 .index_warp{margin:90px 0 50px 0;background-color:#f8f8f8;display:none;}
 nav{padding:0 3%;background-color:#fff;}
@@ -28,20 +30,20 @@ nav a:nth-child(7):before{background-position:-7px -277px;}
 nav a:nth-child(8):before{background-position:-7px -322px;}
 .ad_chart,.hotBuy{padding:0 8px;}
 .ad_chart li{border:1px solid #eaeaea;margin-top:10px;background-color:#fff;}
-.hotBuy h2{font-size:1.4em;line-height:3em;color:#999;border-top:1px solid #ebebeb;margin-top:10px;}
+.hotBuy h2{font-size:1.8em;line-height:2em;color:#999;border-top:1px solid #ebebeb;}
 .hotBuy ul{overflow:hidden;}
 .hotBuy li{float:left;width:49%;border:1px solid #eaeaea;box-sizing: border-box;margin-bottom:10px;position:relative;}
 .hotBuy li > a:nth-child(1){border-bottom:1px solid #eaeaea;display:block;}
-.hotBuy li > a:nth-child(2){font-size:1.4em;color:#000;display:block;margin-top:5px;padding:0 5px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;line-height:1.5em;}
+.hotBuy li > a:nth-child(2){font-size:1.2em;color:#000;font-family: 黑体; display:block;margin-top:5px;padding:0 5px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;line-height:1.3em;}
 .hotBuy li:nth-child(even){margin-left:2%;}
 .hotBuy li > p{overflow:hidden;padding:5px 0 5px 5px;line-height:1.5em;}
-.hotBuy li > p em{display:block;color:#666;}
-.hotBuy li > p span{color:#dd2726;}
-.hotBuy li > p i{color:#666;text-decoration:line-through;}
+.hotBuy li > p em{display:block;color:#AE8F00;font-size: 1.2em;font-family: 黑体;margin-bottom: 5px}
+.hotBuy li > p span{color:#EAC100; font-size: 1.5em;margin-right: 15px;}
+.hotBuy li > p i{color:#ADADAD;text-decoration:line-through;}
 .hotBuy li > b{background-repeat:no-repeat;width:69px;height:69px;position:absolute;left:8px;top:8px;}
 .hotBuy li > div{float:right;overflow:hidden;margin:8px 5px 0 0;}
 .hotBuy li > div a{display:inline-block;vertical-align:middle;}
-.hotBuy li > div a:before {display:block;font-family:Muiicons;font-size:2.8em;color:#6bc30d;}
+.hotBuy li > div a:before {display:block;font-family:Muiicons;font-size:2.3em;color:#6bc30d;}
 .hotBuy li > div a:nth-of-type(1):before{content: "\e410";}
 .hotBuy li > div a:nth-of-type(2):before {content: "\e409";}
 .hotBuy li > div span{font-size:1.4em;display:inline-block;padding:0 2px;vertical-align:middle;color:#666}

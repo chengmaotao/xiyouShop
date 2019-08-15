@@ -47,6 +47,7 @@ public class BaseController extends Controller{
             return setCurrentCart();
         }else{
             Cart currentCart = new Cart().dao().findByCartKey(cookieCart);
+
             if(currentCart==null){
                 //清除cookie
                 removeCookie(Cart.COOKIE_CART);

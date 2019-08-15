@@ -8,12 +8,14 @@
 	<config name="keywords" value="JreCms,JavaCms,Java内容管理系统,互联网建站平台,网站建设,网站开发,微信公众号开发,微信小程序开发,微信APP开发,webapp开发" />
 	<config name="description" value="JreCms,JavaCms,Java内容管理系统,互联网建站平台,网站建设,网站开发,微信公众号开发,微信小程序开发,微信APP开发,webapp开发,省时省力省心,标准化制作流程,让您建站无忧" />
 	<config name="theme" value="default" />
-    <config name="largeProductImageWidth" value="310" />
-    <config name="largeProductImageHeight" value="180" />
+    <config name="largeProductImageWidth" value="375" />  <!-- 310 * 180 -->
+    <config name="largeProductImageHeight" value="218" />
+
     <config name="mediumProductImageWidth" value="248" />
     <config name="mediumProductImageHeight" value="144" />
-    <config name="thumbnailProductImageWidth" value="124" />
-    <config name="thumbnailProductImageHeight" value="72" />
+
+    <config name="thumbnailProductImageWidth" value="174" /> <!-- 124 * 72 -->
+    <config name="thumbnailProductImageHeight" value="101" />
 
     <config name="minimumProductImageWidth" value="62" />
     <config name="minimumProductImageHeight" value="36" />

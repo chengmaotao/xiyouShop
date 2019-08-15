@@ -1,8 +1,7 @@
 package com.cms.filter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -50,6 +49,7 @@ public class PermissionFilter implements Filter{
         add("/order/");
         add("/receiver/");
         add("/payment/");
+        add("/ctc/member");
     }};
 
     @Override
@@ -64,6 +64,24 @@ public class PermissionFilter implements Filter{
         // TODO Auto-generated method stub
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         HttpServletResponse response = (HttpServletResponse)servletResponse;
+
+
+        // 如果不是80端口,需要将端口加上,如果是集群,则用Nginx的地址,同理不是80端口要加上端口
+        String []  allowDomain= {"http://member.newshop.dajiabuy.cn"};
+        Set allowedOrigins= new HashSet(Arrays.asList(allowDomain));
+        String originHeader=request.getHeader("Origin");
+        if (allowedOrigins.contains(originHeader)){
+            response.setHeader("Access-Control-Allow-Origin", originHeader);
+            response.setContentType("application/json;charset=UTF-8");
+            response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+            response.setHeader("Access-Control-Max-Age", "3600");
+            response.setHeader("Access-Control-Allow-Headers", "Content-Type,Access-Token");
+            // 如果要把Cookie发到服务器，需要指定Access-Control-Allow-Credentials字段为true
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Expose-Headers", "*");
+        }
+
+
         String url = request.getRequestURI().toString();
         String contextPath = request.getContextPath();
         url = url.substring(contextPath.length());

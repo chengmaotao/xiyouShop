@@ -45,6 +45,20 @@ public class CtcProduct extends BaseProduct<CtcProduct> {
     }
 
 
+    public List<CtcProduct> findListBySearchName(String keyword,  String orderBy) {
+        String filterSql = "";
+        if (!StringUtils.isEmpty(keyword)) {
+            filterSql+=" and name like '%"+keyword+"%'";
+        }
+        String orderBySql = "";
+        if (StringUtils.isBlank(orderBy)) {
+            orderBySql = DBUtils.getOrderBySql("createDate desc");
+        } else {
+            orderBySql = DBUtils.getOrderBySql(orderBy);
+        }
+        return find("select * from kf_product where 1=1 " + filterSql + orderBySql);
+    }
+
     public ProductImage getProductImages() {
         if (StrKit.notBlank(getProductImage())) {
             //return JSONArray.parseArray(getProductImage(),ProductImage.class);

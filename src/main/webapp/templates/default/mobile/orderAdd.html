@@ -56,28 +56,28 @@
                     <a href="${base}${cartItem.product.path}">
                         <p class="cart_g_name">${cartItem.product.name}</p>
                         <p class="cart_b_name"></p>
-                        <span class="fontred">￥${cartItem.product.price}</span> * ${cartItem.quantity}
+                        <span class="fontred">
+                            [#if isMember]
+								￥${cartItem.product.price}
+							[#else]
+								￥${cartItem.product.marketPrice}
+							[/#if]
+
+                        </span> * ${cartItem.quantity}
                     </a>
                 </div>
                 <a class="cart_orderlist_p" style="display:block"> 
-                    <span class="c_price" id="subtotal_${product.id}"> ￥${cartItem.subtotal}</span>
+                    <span class="c_price" id="subtotal_${product.id}">
+                            [#if isMember]
+								￥${cartItem.subtotal}
+							[#else]
+								￥${cartItem.marketSubtotal}
+							[/#if]
+                    </span>
                 </a> 
             </div>
         </div>
      [/#list]
-<!--     <div class="orderaction clearfix">
-             <div class="fl"></div>      
-             <span id="order-integral"></span><br>
-            <span style="color: red;text-align: center"></span><br>
-                <p class="fr">
-                    [#if hasDeliveryFee]
-                        <span class="c_t_price">商品总金额: ￥${currentCart.totalPrice}</span><br/>
-                        <span class="c_t_price">运费: ￥${deliveryFee}</span><br/>
-                    [/#if]
-                    <span class="c_t_price" id="cart_amount_desc">应付款金额: ￥${realTotalPrice}</span>
-                </p>
-            <div class="clear"></div>
-     </div>-->
   </div>
   
     <div class="bottomdiv clearfix">
@@ -86,7 +86,14 @@
 
             <p style="display: flex;justify-content: space-between">
                 <span>商品总金额 </span>
-                <span>￥${currentCart.totalPrice}</span>
+                <span>
+                    [#if isMember]
+                        ￥${currentCart.totalPrice}
+                    [#else]
+                        ￥${currentCart.marketTotalPrice}
+                    [/#if]
+
+                </span>
             </p>
 
             [#if hasDeliveryFee]

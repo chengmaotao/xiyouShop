@@ -49,8 +49,22 @@ public class CartItem extends BaseCartItem<CartItem> {
      * @return 价格
      */
     public BigDecimal getPrice() {
+
         if (getProduct() != null && getProduct().getPrice() != null) {
             return getProduct().getPrice();
+        } else {
+            return BigDecimal.ZERO;
+        }
+    }
+
+    /**
+     * 市场价格
+     * @return
+     */
+    public BigDecimal getMarketPrice() {
+
+        if (getProduct() != null && getProduct().getMarketPrice() != null) {
+            return getProduct().getMarketPrice();
         } else {
             return BigDecimal.ZERO;
         }
@@ -58,12 +72,25 @@ public class CartItem extends BaseCartItem<CartItem> {
     
     /**
      * 获取小计
-     * 
+     *
      * @return 小计
      */
     public BigDecimal getSubtotal() {
         if (getQuantity() != null) {
             return getPrice().multiply(new BigDecimal(getQuantity()));
+        } else {
+            return BigDecimal.ZERO;
+        }
+    }
+
+    /**
+     * 获取小计
+     *
+     * @return 小计
+     */
+    public BigDecimal getMarketSubtotal() {
+        if (getQuantity() != null) {
+            return getMarketPrice().multiply(new BigDecimal(getQuantity()));
         } else {
             return BigDecimal.ZERO;
         }

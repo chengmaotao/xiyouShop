@@ -97,4 +97,20 @@ public class Cart extends BaseCart<Cart> {
         return totalPrice;
     }
 
+
+    /**
+     * 获取商品总价格(会员价格)
+     *
+     * @return 商品总价格
+     */
+    public BigDecimal getMarketTotalPrice() {
+        BigDecimal totalPrice = BigDecimal.ZERO;
+        if (getCartItems() != null) {
+            for (CartItem cartItem : getCartItems()) {
+                totalPrice = totalPrice.add(cartItem.getMarketSubtotal());
+            }
+        }
+        return totalPrice;
+    }
+
 }

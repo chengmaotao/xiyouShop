@@ -13,13 +13,12 @@ public class CtcMember extends BaseCtcMember<CtcMember> {
 	public static final CtcMember dao = new CtcMember().dao();
 
 
-	public Page<CtcMember> findPage(String title, Integer pageNumber, Integer pageSize){
+	public Page<CtcMember> findPage(String name, Integer pageNumber, Integer pageSize){
 		String filterSql = "";
-		if(StringUtils.isNotBlank(title)){
-			filterSql+= " and title like '%"+title+"%'";
+		if(StringUtils.isNotBlank(name)){
+			filterSql+= " and title like '%"+name+"%'";
 		}
-		String orderBySql = DBUtils.getOrderBySql("createDate desc");
+		String orderBySql = DBUtils.getOrderBySql("sort asc");
 		return paginate(pageNumber, pageSize, "select *", "from ctc_member where 1=1 "+filterSql+orderBySql);
 	}
-
 }

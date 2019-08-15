@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <meta content="yes" name="apple-mobile-web-app-capable">
 <meta content="black" name="apple-mobile-web-app-status-bar-style">
 <meta content="telephone=no" name="format-detection">
@@ -19,36 +19,50 @@
 	<span class="headtit">购物车</span>
 	<div class="head_right fr"><a href="${base}/"><span class="h_home"></span></a></div>
 </header>
-<div style="line-height:44px; height:44px; width:100%"></div>   
+<div style="line-height:44px; height:44px; width:100%"></div>
 <div id="cart_list">
     [#if currentCart.cartItems?? && currentCart.cartItems?size>0]
 		<div class="space10"></div>
-		<h2 class="order_sendby clearfix"><span>共${currentCart.quantity}件商品</span><span><font style="color: red"></font></span></h2>
-		
+		<h2 class="order_sendby clearfix"><span>共${currentCart.quantity}件商品</span></h2>
+
 		<div class="cartdiv">
-		
+
 		      [#list currentCart.cartItems as cartItem]
 	       	<div class="cartlist clearfix newlast-child2">
 	     			<div class="space10"></div>
-	     			<div class="cartlistinner clearfix"> 
+	     			<div class="cartlistinner clearfix">
 	  				<a href="${base}${cartItem.product.path}" class="cart_orderlist_i">
 	       				<img salt="${cartItem.product.name}" src="${cartItem.product.productImages.minimum}">
 					</a>
-	       			<div class="cart_orderlist_info"> 
+	       			<div class="cart_orderlist_info">
 	       				<a href="${base}${cartItem.product.path}">
 	          				<p class="cart_g_name">${cartItem.product.name}</p>
 	          				<p class="cart_b_name"></p>
 		            	</a>
-						    <span class="fontred">￥${cartItem.product.price}</span>
+							[#if isMember]
+								<span class="fontred">￥${cartItem.product.price}</span>
+							[#else]
+								<span class="fontred">￥${cartItem.product.marketPrice}</span>
+							[/#if]
+
+
 							<div class="good_data_num J_pro_num_btn_cart">
 								<span class="good_data_num_l J_num_cart_reduce good_data_num_l_act" onclick="changeQuantity(${cartItem.productId},'-')"><a href="javascript:;">-</a></span>
 								<em class="good_data_num_m J_num_cart_txt"><input type="text" id="cartItem_quantity_${cartItem.productId}" value="${cartItem.quantity}" data="${cartItem.quantity}" size="3" style="border: 0px;" onBlur="changePrice(${cartItem.productId})" /></em>
 								<span class="good_data_num_r J_num_cart_add" onclick="changeQuantity(${cartItem.productId},'+')"><a href="javascript:;">+</a></span>
 							</div>
 	       			</div>
-	      			<a class="cart_orderlist_p" style="display:block"> 
-	          			<span class="c_price" id="cartItem_subtotal_${cartItem.productId}"> ￥${cartItem.subtotal}</span>
-	      			</a> 
+	      			<a class="cart_orderlist_p" style="display:block">
+	          			<span class="c_price" id="cartItem_subtotal_${cartItem.productId}">
+
+                            [#if isMember]
+								￥${cartItem.subtotal}
+							[#else]
+								￥${cartItem.marketSubtotal}
+							[/#if]
+
+                        </span>
+	      			</a>
 					<span class="delete">
 			 			<a href="javascript:if (confirm('您确实要把该商品移出购物车吗？')) deleteCartItem(${cartItem.id},'redirect');"> 
 			 				删除
@@ -57,21 +71,21 @@
 				</div>
 			</div>
 			 [/#list]
-			
-<!--	   		<div class="orderaction clearfix">
-	     	  		<div class="fl"></div>      
-	        		<span id="order-integral"></span><br>
-	               <span style="color: red;text-align: center"></span><br>
-	       		<p class="fr"><span class="c_t_price" id="totalPrice">￥${currentCart.totalPrice}</span></p>
-	     			<div class="clear"></div>
-	   		</div>-->
+
 	 		</div>
-	 		
-	 		
+
+
 	 		<div class="bottomdiv clearfix">
 
 				<div class="inner clearfix inner2">
-					总金额（不含运费） <span class="c_t_price" id="totalPrice">￥${currentCart.totalPrice}</span>
+					总金额（不含运费）
+					<span class="c_t_price" id="totalPrice">
+							[#if isMember]
+								￥${currentCart.totalPrice}
+							[#else]
+								￥${currentCart.marketTotalPrice}
+							[/#if]
+					</span>
 				</div>
 
 	   		<div class="inner clearfix">
@@ -108,7 +122,7 @@ function changeQuantity(productId,operate){
 function changePrice(productId){
     var cartItemNum = $("#cartItem_quantity_"+productId);
     var quantity = cartItemNum.val();
-    var reg = /^\+?[1-9][0-9]*$/;　　//正整数 
+    var reg = /^\+?[1-9][0-9]*$/;　　//正整数
     if(!reg.test(quantity)){
         alert("请输入数字!")
         cartItemNum.val(cartItemNum.attr("data"));
@@ -120,7 +134,7 @@ function changePrice(productId){
 //更新购物车数量
 function updateChangeQuantity(productId,quantity){
     $.axse("/cart_item/update",
-            {"productId":productId,"quantity":quantity,"type":2}, 
+            {"productId":productId,"quantity":quantity,"type":2},
             function(data){
                 $("#cartItem_subtotal_"+productId).html("￥"+data.subtotal);
                 $("#totalPrice").html("￥"+data.totalPrice);
@@ -133,7 +147,7 @@ function updateChangeQuantity(productId,quantity){
 function deleteCartItem(cartItemId,type){
 	//ajax
 	$.axse("/cart_item/delete",
-            {"id":cartItemId}, 
+            {"id":cartItemId},
             function(data){
             	if(type=="ajax"){
             		loadCart();
@@ -143,7 +157,7 @@ function deleteCartItem(cartItemId,type){
             },
             function(data){
         });
-	
+
 }
 
 </script>

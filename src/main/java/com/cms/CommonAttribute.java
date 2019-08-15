@@ -64,6 +64,8 @@ public final class CommonAttribute {
 	
 	/** JSON时间格式 */
 	public static final String JSON_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
+
+	public static final String XIYOU_BASE_URL = "http://newshop.dajiabuy.cn";
 	
 	/**
 	 * 不可实例化

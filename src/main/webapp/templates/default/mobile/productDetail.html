@@ -22,16 +22,16 @@
 	<div class="head_meun"><a href="${base}/view/help"></a></div>
 </header>
 <body class="bgc_ecedf1">
-	<div id="productBasic" class="pwrap" style="padding-bottom:51px;">
+	<div id="productBasic" class="pwrap" style="padding-bottom:10px;">
 		<div class="pro_slide" id="scroll_img">
 			<ul>
-				<li><img src="${product.productImages.large}" style="margin-left: 3em" /></li>
+				<li><img src="${product.productImages.large}" width="100%"/></li>
 			</ul>
 			<ol id='scroll_num'>
 				<li class="cur"></li>
 			</ol>
 		</div>
-		<div class="pro_price pd10" style="width: 29em; margin-left: 3em">
+		<div class="pro_price pd10">
 			<span>&yen;${product.price}</span>
 			<var>会员价</var>
 			<em>市场价<em>￥${product.marketPrice}</em></em>
@@ -53,7 +53,7 @@
 		</div>
 		<div></div>-->
 	</div>
-	<div id="introduction" class="pwrap" style="padding-bottom: 51px; display: none;">
+	<div id="introduction" style="padding-bottom: 10px;padding-top: 52px; display: none;font-size: 1.3em;line-height: 1.4em;">
 		${product.introduction}
 	</div>
 	<footer>
@@ -78,15 +78,15 @@
 			$("#getProductBasic").removeClass("cur");
 			$("#getIntroduction").addClass("cur");
 		}
-		
+
 		function getProductBasic(){
 			$("#introduction").css("display","none");
             $("#productBasic").css("display","block");
             $("#getProductBasic").addClass("cur");
             $("#getIntroduction").removeClass("cur");
 		}
-		
-		
+
+
 	       //更新购物车数量
         function updateQuantity(productId,quantity){
             $.ax("${base}/cart_item/update",
@@ -104,7 +104,7 @@
                      function(data){
                  });
         }
-        
+
         function addProduct(productId){
             $("#reduceProduct_"+productId).css("display","");
 
@@ -117,7 +117,7 @@
             $("#hid_productQuantity_" + productId).val(cartItemNum)
             updateQuantity(productId,cartItemNum);
         }
-        
+
         function reduceProduct(productId){
 
             var cartItemNum = $("#hid_productQuantity_" + productId).val();
@@ -129,7 +129,7 @@
                 updateQuantity(productId,cartItemNum);
             }
         }
-	
+
 	</script>
 </body>
 </html>
@@ -150,7 +150,7 @@ function loadCart(){
                     $("#hid_productQuantity_"+data.cartProductId).val(data.cartProductQuantity);
                 }
             });
-    
-}   
+
+}
 
 </script>

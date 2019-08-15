@@ -99,4 +99,22 @@ public abstract class BaseCtcMember<M extends BaseCtcMember<M>> extends Model<M>
 		return getInt("expireDays");
 	}
 
+	public M setPrice(java.math.BigDecimal price) {
+		set("price", price);
+		return (M)this;
+	}
+	
+	public java.math.BigDecimal getPrice() {
+		return get("price");
+	}
+
+	public M setMarketPrice(java.math.BigDecimal marketPrice) {
+		set("marketPrice", marketPrice);
+		return (M)this;
+	}
+	
+	public java.math.BigDecimal getMarketPrice() {
+		return get("marketPrice");
+	}
+
 }

@@ -36,8 +36,8 @@ public final class ImageUtils {
 	/** 背景颜色 */
 	private static final Color BACKGROUND_COLOR = Color.white;
 
-	/** 目标图片品质(取值范围: 0 - 100) */
-	private static final int DEST_QUALITY = 88;
+	/** 目标图片品质(取值范围: 0 - 100)  0高度压缩   100 高图像质量*/
+	private static final int DEST_QUALITY = 100;
 
 	/**
 	 * 不可实例化
