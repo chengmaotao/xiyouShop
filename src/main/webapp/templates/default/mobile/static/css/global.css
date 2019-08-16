@@ -248,7 +248,7 @@ footer > a:nth-child(2):before {
 footer > a:nth-child(3):before {
 	content: "\e100";
 }
-footer .cart{position:absolute;right:20px;top:-21px;z-index:999;background-color:#fcfcfc;
+footer .cart{position:absolute;right:20px;top:-20px;z-index:999;background-color:#fcfcfc;
 border:1px solid #e5e5e5;
 width:65px;
 height:35px;

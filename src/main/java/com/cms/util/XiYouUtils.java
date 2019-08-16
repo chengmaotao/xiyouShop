@@ -37,6 +37,11 @@ public class XiYouUtils {
     }
 
     public static boolean getByMember(Member member) {
+
+        if(member == null){
+            return false;
+        }
+
         Ehcache cache = CACHE_MANAGER.getEhcache("ctc_member");
 
         String cacheKey = "user_" + member.getId();

@@ -13,7 +13,6 @@ import com.cms.util.AlipayUtils;
 import com.cms.util.SystemUtils;
 import com.cms.util.WeixinUtils;
 import com.jfinal.kit.HttpKit;
-import com.jfinal.kit.PropKit;
 import com.jfinal.log.Log;
 import org.apache.commons.lang.StringUtils;
 
@@ -63,26 +62,12 @@ public class PaymentController extends BaseController {
                     break;
             }
         } else if (order != null) {
-            logger.info("payByWxBrowser()已经支付成功过了 直接进入订单详情页面" +  order.getId());
+            logger.info("payByWxBrowser()已经支付成功过了 直接进入订单详情页面" + order.getId());
 
-            renderJson(new Feedback("paymented", null , null));
+            renderJson(new Feedback("paymented", null, null));
             return;
-/*            String delivery = PropKit.get("delivery");
-            String deliveryFee = PropKit.get("deliveryFee");
-
-            BigDecimal totalPrice = order.getTotalPrice();
-            setAttr("hasDeliveryFee", false);
-            if (totalPrice.compareTo(new BigDecimal(delivery)) < 0) {
-                setAttr("hasDeliveryFee", true);
-                setAttr("deliveryFee", deliveryFee);
-            }
-
-            setAttr("order", order);
-            render("/templates/" + getTheme() + "/" + getDevice() + "/memberOrderDetail.html");*/
-
-            //redirect("/member/order/detail/" + order.getId());
         } else {
-            logger.info("payByWxBrowser() 微信浏览器支付宝支付 订单不存在 " );
+            logger.info("payByWxBrowser() 微信浏览器支付宝支付 订单不存在 ");
             redirect("/");
         }
     }
@@ -112,24 +97,11 @@ public class PaymentController extends BaseController {
                     break;
             }
         } else if (order != null) {
-            logger.info("pay() 已经支付成功过了 直接进入订单详情页面" +  order.getId());
+            logger.info("pay() 已经支付成功过了 直接进入订单详情页面" + order.getId());
 
-           /* String delivery = PropKit.get("delivery");
-            String deliveryFee = PropKit.get("deliveryFee");
-
-            BigDecimal totalPrice = order.getTotalPrice();
-            setAttr("hasDeliveryFee", false);
-            if (totalPrice.compareTo(new BigDecimal(delivery)) < 0) {
-                setAttr("hasDeliveryFee", true);
-                setAttr("deliveryFee", deliveryFee);
-            }
-
-            setAttr("order", order);
-            render("/templates/" + getTheme() + "/" + getDevice() + "/memberOrderDetail.html");*/
-            //return;
             redirect("/member/order/detail/" + order.getId());
         } else {
-            logger.info("pay() 支付 订单不存在 " );
+            logger.info("pay() 支付 订单不存在 ");
             redirect("/");
         }
     }
@@ -183,6 +155,14 @@ public class PaymentController extends BaseController {
                     BigDecimal total_amount = new BigDecimal(params.get("total_amount"));
                     //Order order = new Order().dao().findById(orderId);
                     Order order = new Order().dao().findFirst("select * from kf_order where sn = ?", orderSn);
+
+                    // 支付宝返回的金额 和 订单金额不一致
+                    if(total_amount.compareTo(order.getTotalPrice()) != 0){
+                        logger.warn("支付宝回调：orderSn = {" + orderSn + "} 订单金额{"+order.getTotalPrice()+"} 和 回调金额{}不一致");
+                        renderJson("error");
+                        return;
+                    }
+
                     Payment payment = new Payment();
                     payment.setCreateDate(new Date());
                     payment.setModifyDate(new Date());
