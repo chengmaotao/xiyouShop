@@ -158,7 +158,9 @@ public class OrderController extends BaseController {
 
         Long memberId = getParaToLong("ctcMemberId");
 
-        if (memberId == null) {
+        Long userGid = getParaToLong("userGid");
+
+        if (memberId == null || userGid == null) {
             renderJson(Feedback.error("参数错误"));
             return;
         }
@@ -170,10 +172,14 @@ public class OrderController extends BaseController {
             return;
         }
 
+        Member currentMember = new Member().dao().findById(userGid);
+
+        if (currentMember == null) {
+            renderJson(Feedback.error("用户不存在"));
+            return;
+        }
 
         Order order = new Order();
-        Member currentMember = getCurrentMember();
-        Cart currentCart = getCurrentCart();
 
         Date now = new Date();
         order.setCreateDate(now);
@@ -182,11 +188,11 @@ public class OrderController extends BaseController {
         Integer orderExpireTimes = PropKit.getInt("order.expire.time", 30);
 
         order.setExpire(DateUtils.addMinutes(now, orderExpireTimes));
-        order.setAmount(currentCart.getTotalPrice());
+        order.setAmount(ctcMember.getPrice());
         order.setTotalPrice(ctcMember.getPrice());
         order.setQuantity(1);
 
-        order.setSn(DateFormatUtils.format(now, "yyyyMMddHHmmssSSS") + RandomStringUtils.randomNumeric(5));
+        order.setSn("XYHY_" + DateFormatUtils.format(now, "yyyyMMddHHmmssSSS") + RandomStringUtils.randomNumeric(5));
         order.setStatus(CommonAttribute.ORDER_STATUS_PENDING_PAYMENT);
         order.setMemberId(currentMember.getId());
         order.save();

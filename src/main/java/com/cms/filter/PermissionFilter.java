@@ -43,6 +43,9 @@ public class PermissionFilter implements Filter {
         add("/password");
         add("/payment/alipayNotify");
         add("/payment/weixinNotify");
+        add("/payment/index");  // todo
+        add("/ctc/member/index");
+        add("/order/ctcMemberSave");
     }};
 
     /**
@@ -54,7 +57,7 @@ public class PermissionFilter implements Filter {
         add("/order/");
         add("/receiver/");
         add("/payment/");
-        add("/ctc/member");
+        add("/ctc/member/openMemberView");
     }};
 
     @Override
@@ -78,6 +81,8 @@ public class PermissionFilter implements Filter {
 
         String origin = request.getHeader("Origin");
 
+        System.out.println("origin: " + origin);
+        
         boolean bAllow = false;
 
         if (origin == null) {

@@ -9,6 +9,7 @@ import com.cms.Feedback;
 import com.cms.entity.Order;
 import com.cms.entity.Payment;
 import com.cms.routes.RouteMapping;
+import com.cms.service.CtcUserMemeberService;
 import com.cms.util.AlipayUtils;
 import com.cms.util.SystemUtils;
 import com.cms.util.WeixinUtils;
@@ -182,6 +183,13 @@ public class PaymentController extends BaseController {
                         logger.warn("支付宝回调：order = {" + order + "},支付宝内部唯一标识号：out_trade_no={" + out_trade_no + "}");
                     }
                     //返回
+
+                    // 购买的会员
+                    if(order.getSn().startsWith("XYHY_")){
+                        CtcUserMemeberService ctcUserMemeberService = new CtcUserMemeberService();
+
+                        ctcUserMemeberService.updateUserMember(order);
+                    }
                     renderJson("success");
                 }
             }

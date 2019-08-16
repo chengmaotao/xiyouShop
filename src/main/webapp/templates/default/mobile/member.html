@@ -31,6 +31,8 @@
 			<nav><a href="${base}/member/order/list?status=pendingPayment">待付款</a><a href="${base}/member/order/list?status=pendingShipment">待发货</a><a href="${base}/member/order/list?status=completed">已完成</a><a href="${base}/member/receiver/list">收货地址</a></nav>
 		</section>
 		<!-- <section class="quickEntry"><a href="javascript:void(0)">买菜宝</a><a href="javascript:void(0)">奖品</a><a href="javascript:void(0)">红包</a><a href="javascript:void(0)">充值</a><a href="javascript:void(0)">积分兑换</a><a href="javascript:void(0)">收藏商品</a><a href="javascript:void(0)">天天特惠</a><a href="javascript:void(0)">秒杀</a></section> -->
+
+        <a href="javascript:void(0)" onclick="xiyouMember()">西柚会员购物超级省钱 立即加入</a>
 	</div>
 	<!-- header start -->
    <footer>
@@ -58,10 +60,17 @@ function loadCart(){
     $.ax("${base}/cart/view",null,'GET',null,'json',
             function(data){
                 $("#cartQuantity").text(data.quantity);
-            },
-            function(data){
+            });
+}
+
+function xiyouMember() {
+    //ajax
+    $.ax("${base}/ctc/member/openMemberView",null,'GET',null,'json',
+        function(res){
+            if(res.type == "success"){
+                location.href=res.data;
+            }
         });
-    
-}   
+}
 
 </script>
