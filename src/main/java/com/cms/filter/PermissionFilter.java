@@ -121,6 +121,7 @@ public class PermissionFilter implements Filter {
             if (StringUtils.isBlank(url)
                     || url.equals("/")
                     || url.startsWith("/upload")
+                    || url.startsWith("/uploadXiYouMember")
                     || url.startsWith("/static")
                     || url.startsWith("/common")
                     || StringUtils.isNotBlank(FilenameUtils.getExtension(url))

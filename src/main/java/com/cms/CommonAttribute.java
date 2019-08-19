@@ -64,8 +64,6 @@ public final class CommonAttribute {
 	
 	/** JSON时间格式 */
 	public static final String JSON_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
-
-	public static final String XIYOU_BASE_URL = "http://newshop.dajiabuy.cn";
 	
 	/**
 	 * 不可实例化
@@ -116,10 +114,14 @@ public final class CommonAttribute {
 	public static final String CTC_MEMEBER_TYPE_1 = "1";
 	public static final String CTC_MEMEBER_TYPE_2 = "2";
 
+	public static final String CTC_MEMEBER_TYPE_99 = "99";
+
 	public static final Map ctcMemeberTypeNames = new ListOrderedMap(){{
 		put(CTC_MEMEBER_TYPE_0, "满减");
 		put(CTC_MEMEBER_TYPE_1, "打折");
 		put(CTC_MEMEBER_TYPE_2, "满减打折");
+
+		put(CTC_MEMEBER_TYPE_99, "会员权益");
 	}};
 	
 	/**

@@ -11,7 +11,7 @@
             <h5>编辑西柚会员</h5>
         </div>
         <form id="inputForm" action="update" method="post">
-            <input type="hidden" name="id" value="${ad.id}">
+            <input type="hidden" name="id" value="${ctcMember.id}">
             <div class="ibox-content">
                 <div class="form-horizontal clearfix">
                     <div class="form-group">
@@ -96,7 +96,7 @@
         var $filePicker = $("#filePicker");
 
 
-        $filePicker.uploader();
+        $filePicker.uploadXiYouMember();
 
         $content.editor();
 

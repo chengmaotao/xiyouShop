@@ -313,7 +313,89 @@ function abbreviate(str, width, ellipsis) {
 				});
 			});
 		},
-		
+
+        // 西柚会员文件上传（裁剪了）
+        uploadXiYouMember: function(options) {
+            var settings = {
+                url: '${base}/admin/file/uploadXiYouMember',
+                fileName: "file",
+                data: {},
+                multiple:false,
+                maxSize: 10,
+                extensions: "jpg,jpeg,bmp,gif,png,swf,flv,mp3,wav,avi,rm,rmvb,zip,rar,7z,doc,docx,xls,xlsx,ppt,pptx",
+                before: null,
+                complete: null
+            };
+            $.extend(settings, options);
+            var $progressBar = $('<div class="progressBar"><\/div>').appendTo("body");
+            return this.each(function() {
+                var element = this;
+                var $element = $(element);
+
+                var webUploader = WebUploader.create({
+                    swf: '${base}/static/plugins/webuploader/webuploader.swf',
+                    server: settings.url,
+                    pick: {
+                        id: element,
+                        multiple: false
+                    },
+                    fileVal: settings.fileName,
+                    formData: settings.data,
+                    fileSingleSizeLimit: settings.maxSize * 1024 * 1024,
+                    accept: {
+                        extensions: settings.extensions
+                    },
+                    fileNumLimit: 1,
+                    auto: true
+                }).on('beforeFileQueued', function(file) {
+                    if ($.isFunction(settings.before) && settings.before.call(element, file) === false) {
+                        return false;
+                    }
+                    if ($.trim(settings.extensions) == '') {
+                        this.trigger('error', 'Q_TYPE_DENIED');
+                        return false;
+                    }
+                    this.reset();
+                    $progressBar.show();
+                }).on('uploadProgress', function(file, percentage) {
+                    $progressBar.width(percentage * 100 + '%');
+                }).on('uploadAccept', function(file, data) {
+                    $progressBar.fadeOut("slow", function() {
+                        $progressBar.width(0);
+                    });
+                    if (data.state != 'SUCCESS') {
+                        alert(data.message);
+                        return false;
+                    }
+                    if(settings.multiple){
+                        var multipleFileParent = $element.parent().parent();
+                        var name = multipleFileParent.attr("data-name");
+                        multipleFileParent.find(".multipleFile").append('<div><a href="javascript:;">'+data.url+'&nbsp;x</a><input type="hidden" name="'+name+'" value="'+data.url+'"/></div>');
+                    }else{
+                        $element.parent().parent().find("input:text").val(data.url);
+                    }
+                    if ($.isFunction(settings.complete)) {
+                        settings.complete.call(element, file, data);
+                    }
+                }).on('error', function(type) {
+                    switch(type) {
+                        case "F_EXCEED_SIZE":
+                            alert("上传文件大小超出限制");
+                            break;
+                        case "Q_TYPE_DENIED":
+                            alert("上传文件格式不正确");
+                            break;
+                        default:
+                            alert("上传文件出现错误");
+                    }
+                });
+
+                $element.mouseover(function() {
+                    webUploader.refresh();
+                });
+            });
+        },
+
 		// 编辑器
 		editor: function(options) {
 			window.UEDITOR_CONFIG = {

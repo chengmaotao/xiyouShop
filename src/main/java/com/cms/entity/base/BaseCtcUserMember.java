@@ -63,4 +63,14 @@ public abstract class BaseCtcUserMember<M extends BaseCtcUserMember<M>> extends 
 		return get("expireDayte");
 	}
 
+
+	public M setDestruction(Boolean destruction) {
+		set("destruction", destruction);
+		return (M)this;
+	}
+
+	public Boolean getDestruction() {
+		return get("destruction");
+	}
+
 }

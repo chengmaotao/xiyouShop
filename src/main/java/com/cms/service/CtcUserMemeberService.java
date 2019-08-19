@@ -5,6 +5,7 @@ import com.cms.entity.CtcMember;
 import com.cms.entity.CtcUserMember;
 import com.cms.entity.Order;
 import com.cms.entity.OrderItem;
+import com.cms.util.XiYouUtils;
 import com.jfinal.log.Log;
 import org.apache.commons.lang.time.DateUtils;
 
@@ -47,7 +48,10 @@ public class CtcUserMemeberService {
                 ctcUserMember.setUserId(order.getMemberId());
                 ctcUserMember.setCtcMemberId(orderItem.getProductId());
                 ctcUserMember.setExpireDayte(DateUtils.addDays(now,ctcMember.getExpireDays()));
+                ctcUserMember.setDestruction(false); // 未销毁
                 ctcUserMember.save();
+
+                XiYouUtils.cleanCacheByMember(order.getMemberId());
 
             }else{
                 logger.warn("更新用户会员状态，订单里包含非会员商品：order = {" + order + "}");

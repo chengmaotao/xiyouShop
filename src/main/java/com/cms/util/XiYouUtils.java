@@ -61,10 +61,10 @@ public class XiYouUtils {
         }
     }
 
-    public static void cleanCacheByMember(Member member) {
+    public static void cleanCacheByMember(Long userGid) {
         Ehcache cache = CACHE_MANAGER.getEhcache("ctc_member");
 
-        String cacheKey = "user_" + member.getId();
+        String cacheKey = "user_" + userGid;
 
         cache.remove(cacheKey);
 

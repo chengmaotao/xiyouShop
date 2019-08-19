@@ -178,18 +178,21 @@ public class PaymentController extends BaseController {
                     // 状态是 待支付 才修改为 修改为 已经支付
                     if (StringUtils.equals(order.getStatus(), CommonAttribute.ORDER_STATUS_PENDING_PAYMENT)) {
                         order.setStatus(CommonAttribute.ORDER_STATUS_PENDING_SHIPMENT);
-                        order.update();
+                       // order.update();
                     } else {
                         logger.warn("支付宝回调：order = {" + order + "},支付宝内部唯一标识号：out_trade_no={" + out_trade_no + "}");
+                        return;
                     }
                     //返回
 
                     // 购买的会员
                     if(order.getSn().startsWith("XYHY_")){
+                        order.setStatus(CommonAttribute.ORDER_STATUS_COMPLETED);
                         CtcUserMemeberService ctcUserMemeberService = new CtcUserMemeberService();
 
                         ctcUserMemeberService.updateUserMember(order);
                     }
+                    order.update();
                     renderJson("success");
                 }
             }

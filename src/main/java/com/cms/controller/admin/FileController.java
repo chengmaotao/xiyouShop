@@ -51,4 +51,33 @@ public class FileController extends BaseController {
 		uploadFile.getFile().delete();
 		renderJson(data);
 	}
+
+
+	/**
+	 * 上传
+	 */
+	public void uploadXiYouMember() {
+		UploadFile uploadFile = getFile();
+		Map<String, Object> data = new HashMap<String, Object>();
+		if (uploadFile == null || uploadFile.getFile().length()==0) {
+			data.put("message", "操作错误");
+			data.put("state", "ERROR");
+			renderJson(data);
+			return;
+		}
+		String url = StorageUtils.uploadXiYouMember(uploadFile);
+		if (StringUtils.isEmpty(url)) {
+			data.put("message", "上传文件出现错误");
+			data.put("state", "ERROR");
+			renderJson(data);
+			return;
+		}
+		data.put("message", "成功");
+		data.put("state", "SUCCESS");
+		data.put("url", url);
+		data.put("name",FilenameUtils.getBaseName(url));
+		uploadFile.getFile().delete();
+		renderJson(data);
+	}
+
 }

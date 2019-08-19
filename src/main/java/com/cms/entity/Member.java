@@ -25,7 +25,6 @@ public class Member extends BaseMember<Member> {
     /**
      * 查找会员分页
      *
-     * @param pageable 分页信息
      * @return 会员分页
      */
     public Page<Member> findPage(String mobile, Integer pageNumber, Integer pageSize) {
@@ -55,7 +54,9 @@ public class Member extends BaseMember<Member> {
             return null;
         }
 
-        List<CtcUserMember> ctcUserMembers = new CtcUserMember().find("select * from ctc_user_member where userId = ? and expireDayte >= ? ", userId, new Date());
+        List<CtcUserMember> ctcUserMembers = new CtcUserMember().find("select distinct userId,ctcMemberId from ctc_user_member where userId = ? and expireDayte >= " +
+                        "now() ",
+                userId);
 
         return ctcUserMembers;
     }

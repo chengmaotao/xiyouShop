@@ -2,7 +2,9 @@ package com.cms.task;
 
 import com.cms.CommonAttribute;
 import com.cms.config.JdbcConfig;
+import com.cms.entity.CtcUserMember;
 import com.cms.entity.Order;
+import com.cms.util.XiYouUtils;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -23,6 +25,8 @@ public class OrderTask implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent event) {
         ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(3);
+
+        // 订单长时间支付 取消订单
         scheduledExecutorService.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
@@ -46,5 +50,34 @@ public class OrderTask implements ServletContextListener {
                 }
             }
         }, 1, 300, TimeUnit.SECONDS);
+
+
+        // 西柚会员 到期了 清空缓存
+        scheduledExecutorService.scheduleWithFixedDelay(new Runnable() {
+            @Override
+            public void run() {
+                List<CtcUserMember> ctcUserMembers = new CtcUserMember().dao().find("select * from ctc_user_member where destruction = 0 and expireDayte < now()");
+
+                if (ctcUserMembers != null && ctcUserMembers.size() > 0) {
+
+                    Connection connection = JdbcConfig.getConnection();
+                    String sql = "update ctc_user_member set modifyDate = now(), destruction = 1 where destruction = 0 and id=?";
+
+                    for (CtcUserMember ctcUserMember : ctcUserMembers) {
+                        XiYouUtils.cleanCacheByMember(ctcUserMember.getUserId());
+
+                        try {
+                            PreparedStatement pst = connection.prepareStatement(sql);
+                            pst.setLong(1, ctcUserMember.getId());
+                            pst.executeUpdate();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    JdbcConfig.close(connection);
+                }
+            }
+        }, 1, 3000, TimeUnit.SECONDS);
     }
 }

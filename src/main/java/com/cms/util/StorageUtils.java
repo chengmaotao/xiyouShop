@@ -98,6 +98,39 @@ public class StorageUtils{
 		return null;
 	}
 
+
+	public static String uploadXiYouMember(UploadFile uploadFile) {
+
+		Config config = SystemUtils.getConfig();
+		String uploadPath = config.getFileUploadPath();
+		try {
+			String path = FreeMarkerUtils.process(uploadPath, null);
+
+			String minimumPath = path + UUID.randomUUID() + "xiyouhuiyuan-minimum.jpg";
+
+			for (StoragePlugin storagePlugin : new StoragePlugin().dao().findList(true)) {
+				File tempFile = new File(FileUtils.getTempDirectory(), UUID.randomUUID() + ".tmp");
+				FileUtils.copyFile(uploadFile.getFile(), tempFile);
+				if(SystemUtils.getConfig().getIsWatermarkEnabled()){
+					File watermarkFile = new File(PathKit.getWebRootPath()+SystemUtils.getConfig().getWatermarkImage());
+					ImageUtils.addWatermark(tempFile, tempFile, watermarkFile, SystemUtils.getConfig().getWatermarkPosition(), SystemUtils.getConfig().getWatermarkAlpha());
+				}
+
+				File minimumTempFile = new File(minimumPath);
+
+				ImageUtils.zoom(tempFile, minimumTempFile, config.getMinimumProductImageWidth(), config.getMinimumProductImageHeight());
+
+				return storagePlugin.getUrl(minimumPath);
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		} catch (TemplateException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		return null;
+	}
+
+
 	public static String upload(UploadFile uploadFile) {
 		return upload(uploadFile, true);
 	}

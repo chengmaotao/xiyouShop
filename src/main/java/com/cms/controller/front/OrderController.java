@@ -1,9 +1,11 @@
 package com.cms.controller.front;
 
 import com.cms.CommonAttribute;
+import com.cms.Config;
 import com.cms.Feedback;
 import com.cms.entity.*;
 import com.cms.routes.RouteMapping;
+import com.cms.util.SystemUtils;
 import com.cms.util.XiYouUtils;
 import com.jfinal.kit.PropKit;
 import org.apache.commons.lang.RandomStringUtils;
@@ -211,9 +213,9 @@ public class OrderController extends BaseController {
         orderItem.setProductId(ctcMember.getId());
         orderItem.save();
 
-
+        Config config = SystemUtils.getConfig();
         //
-        String orderUrl = new StringBuffer("").append(CommonAttribute.XIYOU_BASE_URL).append("/payment?orderId=").append(order.getId()).toString();
+        String orderUrl = new StringBuffer("").append(config.getSiteUrl()).append("/payment?orderId=").append(order.getId()).toString();
 
         renderJson(Feedback.success(orderUrl));
         //redirect("/payment?orderId=" + order.getId());
