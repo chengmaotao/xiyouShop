@@ -22,7 +22,7 @@
 	<div class="head_meun"><a href="${base}/view/help"></a></div>
 </header>
 <body class="bgc_ecedf1">
-	<div id="productBasic" class="pwrap" style="padding-bottom:10px;">
+	<div id="productBasic" class="pwrap" style="padding-bottom:10px; margin-bottom: 50px;">
 		<div class="pro_slide" id="scroll_img">
 			<ul>
 				<li><img src="${product.productImages.large}" width="100%"/></li>
@@ -41,11 +41,16 @@
 			<p><em>送</em>满${delivery}元，免费配送</p>
 		</div>
 		<div class="pro_parameter">
+			<input type="hidden" id="cpgugelistId" value="${product.specList}">
 			<h2>产品参数</h2>
-			<ul>
-				<li><label>产地</label><span>${product.production}</span></li>
-                <li><label>特点</label><span>${product.memo}</span></li>
-                <li><label>规格</label><span>${product.specifications}</span></li>
+			<ul id="cpcsId">
+				<li><label>厂家</label><span>${product.production}</span></li>
+                <li><label>特点</label><span>${product.trait}</span></li>
+
+				<!--<li><label>所有</label><span>${product.specList}</span></li>-->
+
+
+               <!-- <li><label>规格</label><span>${product.specifications}</span></li>-->
 			</ul>
 		</div>
 <!--		<div class="v_comment pro_comment">
@@ -136,7 +141,45 @@
 <script type="text/javascript">
 $(function(){
     loadCart();
+    //loadSpecList();
+
 })
+
+function loadSpecList() {
+
+
+	var strSpecList = $("#cpgugelistId").val();
+	console.log(strSpecList);
+
+    var specList = JSON.parse(strSpecList);
+    console.log(specList);
+
+	if(specList == null || specList.length == 0){
+	    return;
+	}else{
+        for (var i = 0; i < specList.length; i++) {
+
+           var specData = specList[i];
+
+           var specDatas = specData.detailList;
+
+            var lispec = "<li><label>" + specData.specTypeName + "</label><span>"
+
+
+           for(var j = 0; j < specDatas.length; j++){
+               lispec = lispec + specDatas[i].specName + "&nbsp;&nbsp;"
+		   }
+            lispec = lispec + "</span></li>"
+            // <li><label>所有</label><span>${product.jsonSpecList}</span></li>
+
+            $("#cpcsId").append(lispec);
+
+            //result[i].userName;
+        }
+	}
+
+
+}
 
 function loadCart(){
     //ajax

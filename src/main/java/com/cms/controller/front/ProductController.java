@@ -1,5 +1,7 @@
 package com.cms.controller.front;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.cms.CommonAttribute;
 import com.cms.Feedback;
 import com.cms.entity.CtcProduct;
@@ -31,6 +33,9 @@ public class ProductController extends BaseController {
             return;
         }
         setAttr("product", product);
+
+        String specList = product.getSpecList();
+        setAttr("specList", specList);
 
         String delivery = PropKit.get("delivery");
         String deliveryFee = PropKit.get("deliveryFee");

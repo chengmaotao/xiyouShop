@@ -9,12 +9,12 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings({"serial", "unchecked"})
 public abstract class BaseProduct<M extends BaseProduct<M>> extends Model<M> implements IBean {
 
-	public M setId(java.lang.Long id) {
+	public M setId(Long id) {
 		set("id", id);
 		return (M)this;
 	}
 	
-	public java.lang.Long getId() {
+	public Long getId() {
 		return getLong("id");
 	}
 
@@ -36,138 +36,138 @@ public abstract class BaseProduct<M extends BaseProduct<M>> extends Model<M> imp
 		return get("modifyDate");
 	}
 
-	public M setName(java.lang.String name) {
+	public M setName(String name) {
 		set("name", name);
 		return (M)this;
 	}
 	
-	public java.lang.String getName() {
+	public String getName() {
 		return getStr("name");
 	}
 
-	public M setCaption(java.lang.String caption) {
+	public M setCaption(String caption) {
 		set("caption", caption);
 		return (M)this;
 	}
 	
-	public java.lang.String getCaption() {
+	public String getCaption() {
 		return getStr("caption");
 	}
 
-	public M setImage(java.lang.String image) {
+	public M setImage(String image) {
 		set("image", image);
 		return (M)this;
 	}
 	
-	public java.lang.String getImage() {
+	public String getImage() {
 		return getStr("image");
 	}
 
-	public M setIntroduction(java.lang.String introduction) {
+	public M setIntroduction(String introduction) {
 		set("introduction", introduction);
 		return (M)this;
 	}
 	
-	public java.lang.String getIntroduction() {
+	public String getIntroduction() {
 		return getStr("introduction");
 	}
 
-	public M setHits(java.lang.Long hits) {
+	public M setHits(Long hits) {
 		set("hits", hits);
 		return (M)this;
 	}
 	
-	public java.lang.Long getHits() {
+	public Long getHits() {
 		return getLong("hits");
 	}
 
-	public M setProductCategoryId(java.lang.Long productCategoryId) {
+	public M setProductCategoryId(Long productCategoryId) {
 		set("productCategoryId", productCategoryId);
 		return (M)this;
 	}
 	
-	public java.lang.Long getProductCategoryId() {
+	public Long getProductCategoryId() {
 		return getLong("productCategoryId");
 	}
 
-	public M setParameterValue(java.lang.String parameterValue) {
+	public M setParameterValue(String parameterValue) {
 		set("parameterValue", parameterValue);
 		return (M)this;
 	}
 	
-	public java.lang.String getParameterValue() {
+	public String getParameterValue() {
 		return getStr("parameterValue");
 	}
 
-	public M setSpecifications(java.lang.String specifications) {
+	public M setSpecifications(String specifications) {
 		set("specifications", specifications);
 		return (M)this;
 	}
 	
-	public java.lang.String getSpecifications() {
+	public String getSpecifications() {
 		return getStr("specifications");
 	}
 
-	public M setMemo(java.lang.String memo) {
+	public M setMemo(String memo) {
 		set("memo", memo);
 		return (M)this;
 	}
 	
-	public java.lang.String getMemo() {
+	public String getMemo() {
 		return getStr("memo");
 	}
 
-	public M setSn(java.lang.String sn) {
+	public M setSn(String sn) {
 		set("sn", sn);
 		return (M)this;
 	}
 	
-	public java.lang.String getSn() {
+	public String getSn() {
 		return getStr("sn");
 	}
 
-	public M setWeight(java.lang.String weight) {
+	public M setWeight(String weight) {
 		set("weight", weight);
 		return (M)this;
 	}
 	
-	public java.lang.String getWeight() {
+	public String getWeight() {
 		return getStr("weight");
 	}
 
-	public M setProduction(java.lang.String production) {
+	public M setProduction(String production) {
 		set("production", production);
 		return (M)this;
 	}
 	
-	public java.lang.String getProduction() {
+	public String getProduction() {
 		return getStr("production");
 	}
 
-	public M setSales(java.lang.Long sales) {
+	public M setSales(Long sales) {
 		set("sales", sales);
 		return (M)this;
 	}
 	
-	public java.lang.Long getSales() {
+	public Long getSales() {
 		return getLong("sales");
 	}
 
-	public M setIsMarketable(java.lang.Boolean isMarketable) {
+	public M setIsMarketable(Boolean isMarketable) {
 		set("isMarketable", isMarketable);
 		return (M)this;
 	}
 	
-	public java.lang.Boolean getIsMarketable() {
+	public Boolean getIsMarketable() {
 		return get("isMarketable");
 	}
 
-	public M setUnit(java.lang.String unit) {
+	public M setUnit(String unit) {
 		set("unit", unit);
 		return (M)this;
 	}
 	
-	public java.lang.String getUnit() {
+	public String getUnit() {
 		return getStr("unit");
 	}
 
@@ -198,13 +198,76 @@ public abstract class BaseProduct<M extends BaseProduct<M>> extends Model<M> imp
 		return get("marketPrice");
 	}
 
-	public M setProductImage(java.lang.String productImage) {
+	public M setProductImage(String productImage) {
 		set("productImage", productImage);
 		return (M)this;
 	}
 	
-	public java.lang.String getProductImage() {
+	public String getProductImage() {
 		return getStr("productImage");
+	}
+
+	public M setProductOrigin(String productOrigin) {
+		set("productOrigin", productOrigin);
+		return (M)this;
+	}
+	
+	public String getProductOrigin() {
+		return getStr("productOrigin");
+	}
+
+	public M setByProductData(String byProductData) {
+		set("byProductData", byProductData);
+		return (M)this;
+	}
+	
+	public String getByProductData() {
+		return getStr("byProductData");
+	}
+
+	public M setByProductDetailData(String byProductDetailData) {
+		set("byProductDetailData", byProductDetailData);
+		return (M)this;
+	}
+	
+	public String getByProductDetailData() {
+		return getStr("byProductDetailData");
+	}
+
+	public M setByImages(String byImages) {
+		set("byImages", byImages);
+		return (M)this;
+	}
+	
+	public String getByImages() {
+		return getStr("byImages");
+	}
+
+	public M setTrait(String trait) {
+		set("trait", trait);
+		return (M)this;
+	}
+	
+	public String getTrait() {
+		return getStr("trait");
+	}
+
+	public M setSpecList(String specList) {
+		set("specList", specList);
+		return (M)this;
+	}
+	
+	public String getSpecList() {
+		return getStr("specList");
+	}
+
+	public M setDescriptionList(String descriptionList) {
+		set("descriptionList", descriptionList);
+		return (M)this;
+	}
+	
+	public String getDescriptionList() {
+		return getStr("descriptionList");
 	}
 
 }

@@ -16,5 +16,22 @@ http://localhost:8081/admin/login
 logo 图： 140 * 50
 
 
+=====================================
+必要app
+
+图片大小： 400 * 400
+
+首页 图片： 360 * 360  （image）
+http://bfs.biyao.com/group1/M00/AE/FC/rBACVFyaz4eAGKTTAACIRqOeYE0800.webp
 
 
+详情页面： 640 * 640   （imgList）
+
+
+// 产品列表：
+
+
+============================
+首页 174 * 174
+
+购物车：62 * 62

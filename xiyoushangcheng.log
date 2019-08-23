@@ -10,3 +10,6 @@
 
 2019-08-15 15:12:53
 [INFO]-[Thread: main]-[com.alibaba.druid.pool.DruidDataSource.init()]: {dataSource-1} inited
+
+2019-08-22 16:46:35
+[INFO]-[Thread: main]-[com.alibaba.druid.pool.DruidDataSource.init()]: {dataSource-1} inited

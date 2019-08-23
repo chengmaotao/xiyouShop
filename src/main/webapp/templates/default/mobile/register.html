@@ -47,17 +47,27 @@
 		      	<dd><span class="form_hd">确认密码：</span><span class="form_td ml80"><input name="rePassword" id="rePassword" type="password" value="" maxlength="50" placeholder="6－20位字母、数字结合" class="text_input"></span></dd>
 		    </dl>
 			<dl id="tips" style="color:#da4f49; text-align:center; font-weight:bold;">
-
 			</dl>
+
+			<span class="checkbox"><input type="checkbox" checked id="ydbjsId"> 我已阅读并接受<a href="http://member.newshop.dajiabuy.cn/#/agreement" class="red" target="_blank">服务条款</a>。</span>
 	    	<div class="space15"></div>
 	    	<input name="btnReg" type="submit" class="btn_red largerbtn longbtn" value="注册">
 	    	<div class="space15"></div>
  		</form>
  	</div>
  </div>
+
+
+
+
  <script type="text/javascript">
  $(document).ready(function() {
 	 $('#inputForm').submit(function() {
+
+         if(!$("#ydbjsId").is(':checked')){
+             return false;
+         }
+
 		var username=$('#username').val();
 		if(username.length==0){
 			$('#inputForm #tips').html('请输入手机号！');

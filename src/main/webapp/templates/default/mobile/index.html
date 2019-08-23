@@ -56,7 +56,7 @@
     <li class="cur" val="推荐"><a href="javascript:void(0)" onClick="syfenlei()">推荐</a></li>
     [@product_category_root_list ]
     [#list productCategories as productCategorie]
-    <li val="${productCategorie.name}"><a href="javascript:void(0)" onClick="syfenlei(${productCategorie_index})">${productCategorie.name}</a></li>
+    <li val="${productCategorie.name}"><a href="javascript:void(0)" onClick="syfenlei(${productCategorie_index},${productCategorie.id})">${productCategorie.name}</a></li>
     [/#list]
     [/@product_category_root_list]
 </ul>
@@ -104,7 +104,7 @@
 </div>
 
 <div class="icon">
-    <img style="width: 15vw;" src="${base}/templates/${config.theme}/mobile/static/images/top.png" alt=""/>
+    <img style="width: 12vw;" src="${base}/templates/${config.theme}/mobile/static/images/top.png" alt=""/>
 </div>
 
 <!-- header start -->
@@ -124,14 +124,15 @@
 <script>
 
 
-    var height=$(window).height()
+    var height=window.screen.height;
+
     $('.icon').on('click', function () {
         window.scrollTo(0,0)
     })
     $(window).scroll(function(){
         var top = $(document).scrollTop();  //滚动条距离顶部的高度
 
-        if(top>2*height){
+        if(top>3*height){
             $('.icon').css({display:'block'})
         }else{
             $('.icon').css({display:'none'})
@@ -162,6 +163,7 @@
     $(function () {
 
         syfenlei();
+
         $(".meunTab li").click(function () {
             $(this).addClass("cur").siblings().removeAttr("class");
 
@@ -174,7 +176,7 @@
 
 
     // 分类
-    function syfenlei(cid) {
+    function syfenlei(index_,cid) {
         $.ax("${base}/product/productList",
             {"cid": cid}, 'POST', null, 'json',
             function (res) {
@@ -196,7 +198,7 @@
                             + '<a id="hotAddProduct_' + resproduct.id + '" onClick=hotAddProduct("' + resproduct.id + '")></a>'
                             + '</div>'
                             + '<p>'
-                            + "<em>" + resproduct.specifications + "</em>"
+                            /*+ "<em>" + resproduct.specifications + "</em>"*/
                             + "<span>￥" + resproduct.price + "</span>"
                             + "原价: <i>￥" + resproduct.marketPrice + "</i>"
                             + "</p>"
@@ -234,7 +236,7 @@
                             + '<a id="hotAddProduct_' + resproduct.id + '" onClick=hotAddProduct("' + resproduct.id + '")></a>'
                             + '</div>'
                             + '<p>'
-                            + "<em>" + resproduct.specifications + "</em>"
+                           /* + "<em>" + resproduct.specifications + "</em>"*/
                             + "<span>￥" + resproduct.price + "</span>"
                             + "原价: <i>￥" + resproduct.marketPrice + "</i>"
                             + "</p>"

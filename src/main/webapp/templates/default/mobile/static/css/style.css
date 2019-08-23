@@ -11,13 +11,13 @@
 /*
 .header h2 i{border-color:#fff transparent;border-width:5px 4px 0;border-style:solid solid none;display:inline-block;margin-left:5px;}
 */
-.meunTab{height:44px;background:#fff;position:fixed;left:0;top:40px;width:100%;z-index:9999;border-bottom:1px solid #dedede;overflow-x: auto;white-space: nowrap;}
+.meunTab{height:35px;background:#fff;position:fixed;left:0;top:35px;width:100%;z-index:9999;border-bottom:1px solid #dedede;overflow-x: auto;white-space: nowrap;}
 .meunTab li{line-height:44px;color:#a1a1a1;font-size:1.4em;cursor:pointer;display: inline-block;padding: 0px 10px 0px 10px}
 .meunTab li.cur{border-bottom:2px solid #750075;line-height:32px;}
 .meunTab li.cur a{color:#750075}
 .meunTab li a{font-size: 1.3em;}
 
-.index_warp{margin:90px 0 50px 0;background-color:#f8f8f8;display:none;}
+.index_warp{margin:80px 0 50px 0;background-color:#f8f8f8;display:none;}
 nav{padding:0 3%;background-color:#fff;}
 nav a{width:24%;display:inline-block;text-align:center;color:#2c2c2c;font-size:1.2em;margin:5px 0 10px 0;}
 nav a:before{display:block;width:46px;height:45px;content:"";margin:0 auto 0.5em auto;background:url(../images/nico.png) no-repeat -7px 0;}
