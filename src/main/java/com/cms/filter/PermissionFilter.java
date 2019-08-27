@@ -1,7 +1,9 @@
 package com.cms.filter;
 
+import com.cms.Config;
 import com.cms.entity.Admin;
 import com.cms.entity.Member;
+import com.cms.util.SystemUtils;
 import com.jfinal.kit.PropKit;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
@@ -10,6 +12,8 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -143,7 +147,12 @@ public class PermissionFilter implements Filter {
                         filterChain.doFilter(servletRequest, servletResponse);
                         return;
                     }
-                    response.sendRedirect(contextPath + "/login");
+
+                    Config config = SystemUtils.getConfig();
+                    String weixinAuthorizeReditUrl = PropKit.get("weixinAuthorizeReditUrl");
+                    String wxAuthorizeReditUrl = new StringBuffer("").append(config.getSiteUrl()).append(weixinAuthorizeReditUrl).toString();
+
+                    response.sendRedirect(contextPath + "/login/index?weixinAuthorizeReditUrl=" + wxAuthorizeReditUrl);
                     return;
 
                 }

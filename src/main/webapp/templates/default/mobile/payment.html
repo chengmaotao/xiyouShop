@@ -35,12 +35,10 @@
     </ul>
     <form action="${base}/payment/pay" method="post" id="inputForm">
         <input type="hidden" name="orderId" value="${order.id}" id="orderId">
-        <input type="hidden" name="paySource" value="wap" id="paySource">
-        <!--<input type="hidden" name="browsertype" value="" id="browsertype">-->
         <ul class="oldAddress">
 	         <li>
-	            <!-- <p><input type="radio" name="paymentMethod" value="weixin" id="weixin" checked/><label for="weixin">微信支付</label></p>-->
-	             <p><input type="radio" name="paymentMethod" value="alipay" id="alipay" checked/><label for="alipay">支付宝支付</label></p>
+	             <p><input type="radio" name="paymentMethod" value="weixin" id="weixin" checked/><label for="weixin">微信支付</label></p>
+	             <p><input type="radio" name="paymentMethod" value="alipay" id="alipay"/><label for="alipay">支付宝支付</label></p>
 	         </li>
 	    </ul>
 	    <div class="bottomdiv clearfix">
@@ -56,50 +54,156 @@
   <script type="text/javascript">
  $(document).ready(function() {
 
+
+     function pay(appId,timeStamp,nonceStr,pg,signType,paySign){
+         if (typeof WeixinJSBridge == "undefined"){
+             if( document.addEventListener ){
+                 document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+             }else if (document.attachEvent){
+                 document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                 document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+             }
+         }else{
+             onBridgeReady(appId,timeStamp,nonceStr,pg,signType,paySign);
+         }
+
+     }
+
+
+     function onBridgeReady(appId,timeStamp,nonceStr,pg,signType,paySign){
+         WeixinJSBridge.invoke(
+             'getBrandWCPayRequest', {
+                 "appId" : appId,     //公众号名称，由商户传入
+                 "timeStamp": timeStamp,         //时间戳，自1970年以来的秒数
+                 "nonceStr" : nonceStr, //随机串
+                 "package" : "prepay_id=" + pg,
+                 "signType" : signType,         //微信签名方式:
+                 "paySign" : paySign    //微信签名
+             },
+             function(res){
+                 if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+
+                     alert("支付成功");
+                     window.location.href='${base}/member/order/detail/' + $('#orderId').val();
+                 }else{
+                     alert("支付未成功");
+                     window.location.href='${base}/member/order/detail/' + $('#orderId').val();
+                 }
+             }
+         );
+     }
+
+
+     var paymentMethod=$('input[name="paymentMethod"]:checked').val();//获取选中的单选的值
+
      var is_weixin = (function(){return navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1})();
+
      if(is_weixin){
          $("#btnOrder").on("click",function(){
-             //$('#inputForm').submit();
-             $.ajax({
-                 url: "${base}/payment/payByWxBrowser",
-                 type: "POST",
-                 data: {
-                     orderId: $('#orderId').val(),
-                     paySource: $('#paySource').val(),
-                     paymentMethod: $('#alipay').val()
-                 },
-                 dataType: "json",
-                 success: function(data) {
+             var paymentMethod=$('input[name="paymentMethod"]:checked').val();//获取选中的单选的值
+             if(paymentMethod=='alipay'){
+                 $.ajax({
+                     url: "${base}/payment/payByWxBrowser",
+                     type: "POST",
+                     data: {
+                         orderId: $('#orderId').val(),
+                         paymentMethod: 'alipay'
+                     },
+                     dataType: "json",
+                     success: function(data) {
 
-                     if (data.type == "success") {
-                         var form = data.data;
-                         form = Base64.decode(form);
-                         form = form.slice(0,-45);
-                         $("#alipayForm").append(form);
-                         $("#alipayForm script").remove();
-                         var queryParam = '';
-                         Array.prototype.slice.call(document.querySelectorAll("input[type=hidden]")).forEach(function (ele) {
-                             if(ele.id == 'orderId' || ele.id == 'paySource'){
+                         if (data.type == "success") {
+                             var form = data.data;
+                             form = Base64.decode(form);
+                             form = form.slice(0,-45);
+                             $("#alipayForm").append(form);
+                             $("#alipayForm script").remove();
+                             var queryParam = '';
+                             Array.prototype.slice.call(document.querySelectorAll("input[type=hidden]")).forEach(function (ele) {
+                                 if(ele.id == 'orderId' || ele.id == 'paySource'){
 
-                             }else{
-                                 queryParam += ele.name + "=" + encodeURIComponent(ele.value) + '&';
-                             }
-                         });
-                         var url = document.getElementsByName("punchout_form")[0].action+'&'+queryParam;
-                         _AP.pay(url);
-                     }else if(data.type == "paymented"){
-                         window.location.href='${base}/member/order/detail/' + $('#orderId').val();
+                                 }else{
+                                     queryParam += ele.name + "=" + encodeURIComponent(ele.value) + '&';
+                                 }
+                             });
+                             var url = document.getElementsByName("punchout_form")[0].action+'&'+queryParam;
+                             _AP.pay(url);
+                         }else if(data.type == "paymented"){
+                             window.location.href='${base}/member/order/detail/' + $('#orderId').val();
+                         }else{
+                             alert("调取支付宝支付失败……");
+                         }
                      }
-                 }
-             });
+                 });
+             }else if(paymentMethod=='weixin'){
 
+                 $.ajax({
+                     url: "${base}/payment/payByWxBrowser",
+                     type: "POST",
+                     data: {
+                         orderId: $('#orderId').val(),
+                         paymentMethod: 'weixin'
+                     },
+                     dataType: "json",
+                     success: function(data) {
+
+                         if (data.type == "success") {
+                             var result = data.data;
+                             console.log(result);
+                             var appId = result.appId;
+                             var timeStamp = result.timeStamp;
+                             var nonceStr = result.nonceStr;
+                             var pg = result.prepay_id;
+                             var signType = result.signType;
+                             var paySign = result.paySign;
+
+                             pay(appId,timeStamp,nonceStr,pg,signType,paySign);
+
+                         }else if(data.type == "paymented"){
+                             window.location.href='${base}/member/order/detail/' + $('#orderId').val();
+                         }else{
+                             alert("调取支付宝支付失败……");
+                         }
+                     }
+                 });
+
+             }else{
+                 alert("1请选择正确的支付方式");
+                 return;
+             }
          });
-
-
      }else{
          $("#btnOrder").on("click",function(){
-             $('#inputForm').submit();
+             var paymentMethod=$('input[name="paymentMethod"]:checked').val();//获取选中的单选的值
+             if(paymentMethod=='alipay'){
+                 $('#inputForm').submit();
+             }else if(paymentMethod=='weixin'){
+                 alert("不是微信浏览器 微信支付");
+                 $.ajax({
+                     url: "${base}/payment/wechatH5Pay",
+                     type: "POST",
+                     data: {
+                         orderId: $('#orderId').val(),
+                         paymentMethod: 'weixin'
+                     },
+                     dataType: "json",
+                     success: function(data) {
+                         if (data.type == "success") {
+                             var result = data.data;
+                             location.href = result.mweb_url;
+                         }else if(data.type == "paymented"){
+                             window.location.href='${base}/member/order/detail/' + $('#orderId').val();
+                         }else{
+                             alert("调取微信支付失败……");
+                         }
+                     }
+                 });
+             }else{
+                 alert("2请选择正确的支付方式");
+                 return;
+             }
          });
      }
+
  });
  </script>

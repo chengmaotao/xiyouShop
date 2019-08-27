@@ -46,7 +46,9 @@
 				[/#if]
 			</dl>
       		<div class="space15"></div>
-      		<input name="btnLogin" type="submit" value="登录" class="btn_red" />
+			<input type="hidden" value="${weixinAuthorizeReditUrl}" id="weixinAuthorizeReditUrlId">
+			<input type="hidden" name="appIdName" value="${appId}" id="appId">
+      		<input name="btnLogin" type="button" value="登录" class="btn_red" id="btnSubmit"/>
       		<div class="space15"></div>
       		<a href="${base}/password/forgot" class="forgetkey">忘记密码?</a>
   		</form>
@@ -55,16 +57,33 @@
 <div class="space10"></div>
 <script type="text/javascript">
 $(document).ready(function() {
-	$('#inputForm').submit(function() {
-		if($('#username').val() == ''){
-			$('#inputForm #tips').html('请输入手机号码！');
-			return false;
+
+    var is_weixin = (function(){return navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1})();
+
+    $("#btnSubmit").on("click",function(){
+
+        if($('#username').val() == ''){
+            $('#inputForm #tips').html('请输入手机号码！');
+            return false;
+        }
+        if($('#pwd').val()==''){
+            $('#inputForm #tips').html('请输入密码！');
+            return false;
+        }
+
+        if(is_weixin){
+            var redirect_uri = $("#weixinAuthorizeReditUrlId").val() + "?username=" + $('#username').val() + "&password=" + $('#pwd').val() + "&wxId=weixin";
+            var redirectUri = encodeURIComponent(redirect_uri);
+            var temUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + $("#appId").val() + '&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect';
+            location.href=temUrl;
+
+        }else{
+            $('#inputForm').submit();
 		}
-		if($('#pwd').val()==''){
-			$('#inputForm #tips').html('请输入密码！');
-			return false;
-		}
-	});
+
+    });
+
+
 });
 </script>
 </body>

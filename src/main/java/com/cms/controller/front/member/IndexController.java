@@ -37,4 +37,5 @@ public class IndexController extends BaseController {
         render("/templates/" + getTheme() + "/" + getDevice() + "/member.html");
     }
 
+
 }

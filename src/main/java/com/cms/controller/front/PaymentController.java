@@ -17,6 +17,7 @@ import com.jfinal.kit.HttpKit;
 import com.jfinal.log.Log;
 import org.apache.commons.lang.StringUtils;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
@@ -31,6 +32,7 @@ import java.util.Map;
  */
 @RouteMapping(url = "/payment")
 public class PaymentController extends BaseController {
+
 
     // private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
     private static Log logger = Log.getLog(PaymentController.class);
@@ -49,7 +51,6 @@ public class PaymentController extends BaseController {
     public void payByWxBrowser() {
         Long orderId = getParaToLong("orderId");
         String paymentMethod = getPara("paymentMethod");
-        //String paySource = getPara("paySource");
         Order order = new Order().dao().findById(orderId);
         if (StringUtils.isNotBlank(paymentMethod) && order != null && CommonAttribute.ORDER_STATUS_PENDING_PAYMENT.equals(order.getStatus())) {
             switch (paymentMethod) {
@@ -58,13 +59,13 @@ public class PaymentController extends BaseController {
                     renderJson(Feedback.success(wapWxPayBody));
                     break;
                 case CommonAttribute.PAYMENT_METHOD_WEIXIN:
-                    Map<String, String> result = WeixinUtils.wechatPay(order.getTotalPrice(), "订单支付", order.getMember().getWeixinOpenId(), getRequest(), getResponse());
-                    renderJson(result);
+                    Map<String, String> result = WeixinUtils.wechatPay(order.getSn(), order.getTotalPrice(), "订单支付", order.getMember().getWeixinOpenId(), getRequest(), getResponse());
+                    //renderJson(result);
+                    renderJson(Feedback.success(result));
                     break;
             }
         } else if (order != null) {
             logger.info("payByWxBrowser()已经支付成功过了 直接进入订单详情页面" + order.getId());
-
             renderJson(new Feedback("paymented", null, null));
             return;
         } else {
@@ -75,31 +76,50 @@ public class PaymentController extends BaseController {
 
 
     /**
-     * 支付
+     * 非微信浏览器 调取微信h5支付
      */
-    public void pay() {
+    public void wechatH5Pay() {
         Long orderId = getParaToLong("orderId");
         String paymentMethod = getPara("paymentMethod");
-        String paySource = getPara("paySource");
         Order order = new Order().dao().findById(orderId);
         if (StringUtils.isNotBlank(paymentMethod) && order != null && CommonAttribute.ORDER_STATUS_PENDING_PAYMENT.equals(order.getStatus())) {
+            Map<String, String> result = WeixinUtils.h5Pay(order.getId(), order.getSn(), order.getTotalPrice(), "订单支付", getRequest());
+            logger.info("wechatH5Pay:" + result);
+            Feedback success = Feedback.success(result);
+            logger.info("returnHtml:" + success);
+            renderJson(success);
+        } else if (order != null) {
+            logger.info("wechatH5Pay() 已经支付成功过了 直接进入订单详情页面" + order.getId());
+            renderJson(new Feedback("paymented", null, null));
+            return;
+        } else {
+            logger.info("wechatH5Pay() 支付 订单不存在 ");
+            redirect("/");
+        }
+    }
+
+    /**
+     * 支付
+     */
+    public void pay() throws IOException {
+        Long orderId = getParaToLong("orderId");
+        String paymentMethod = getPara("paymentMethod");
+        Order order = new Order().dao().findById(orderId);
+        if (StringUtils.isNotBlank(paymentMethod) && order != null && CommonAttribute.ORDER_STATUS_PENDING_PAYMENT.equals(order.getStatus())) {
+
             switch (paymentMethod) {
                 case CommonAttribute.PAYMENT_METHOD_ALIPAY:
-                    if ("web".equals(paySource)) {
-                        AlipayUtils.webPay(order.getSn(), order.getTotalPrice(), "订单支付", getRequest(), getResponse());
-                        break;
-                    } else if ("wap".equals(paySource)) {
-                        AlipayUtils.wapPay(order.getSn(), order.getTotalPrice(), "订单支付", getRequest(), getResponse());
-                        break;
-                    }
+                    AlipayUtils.wapPay(order.getSn(), order.getTotalPrice(), "订单支付", getRequest(), getResponse());
+                    break;
                 case CommonAttribute.PAYMENT_METHOD_WEIXIN:
-                    Map<String, String> result = WeixinUtils.wechatPay(order.getTotalPrice(), "订单支付", order.getMember().getWeixinOpenId(), getRequest(), getResponse());
-                    renderJson(result);
+                    Map<String, String> result = WeixinUtils.h5Pay(order.getId(), order.getSn(), order.getTotalPrice(), "订单支付", getRequest());
+                    String mweb_url = result.get("mweb_url");
+                    getResponse().sendRedirect(mweb_url);
                     break;
             }
+
         } else if (order != null) {
             logger.info("pay() 已经支付成功过了 直接进入订单详情页面" + order.getId());
-
             redirect("/member/order/detail/" + order.getId());
         } else {
             logger.info("pay() 支付 订单不存在 ");
@@ -158,8 +178,8 @@ public class PaymentController extends BaseController {
                     Order order = new Order().dao().findFirst("select * from kf_order where sn = ?", orderSn);
 
                     // 支付宝返回的金额 和 订单金额不一致
-                    if(total_amount.compareTo(order.getTotalPrice()) != 0){
-                        logger.warn("支付宝回调：orderSn = {" + orderSn + "} 订单金额{"+order.getTotalPrice()+"} 和 回调金额{}不一致");
+                    if (total_amount.compareTo(order.getTotalPrice()) != 0) {
+                        logger.warn("支付宝回调：orderSn = {" + orderSn + "} 订单金额{" + order.getTotalPrice() + "} 和 回调金额{" + total_amount + "}不一致");
                         renderJson("error");
                         return;
                     }
@@ -178,15 +198,15 @@ public class PaymentController extends BaseController {
                     // 状态是 待支付 才修改为 修改为 已经支付
                     if (StringUtils.equals(order.getStatus(), CommonAttribute.ORDER_STATUS_PENDING_PAYMENT)) {
                         order.setStatus(CommonAttribute.ORDER_STATUS_PENDING_SHIPMENT);
-                       // order.update();
+                        // order.update();
                     } else {
-                        logger.warn("支付宝回调：order = {" + order + "},支付宝内部唯一标识号：out_trade_no={" + out_trade_no + "}");
+                        logger.warn("支付宝回调：order = {" + order + "},支付宝内部唯一标识号：out_trade_no={" + out_trade_no + "} 不是待支付状态");
                         return;
                     }
                     //返回
 
                     // 购买的会员
-                    if(order.getSn().startsWith("XYHY_")){
+                    if (order.getSn().startsWith("XYHY_")) {
                         order.setStatus(CommonAttribute.ORDER_STATUS_COMPLETED);
                         CtcUserMemeberService ctcUserMemeberService = new CtcUserMemeberService();
 
@@ -206,6 +226,7 @@ public class PaymentController extends BaseController {
      * 微信异步
      */
     public void weixinNotify() {
+        System.out.println("微信回调guolaile……");
         String data = HttpKit.readData(getRequest());
         Map<String, String> weixinResult = new HashMap<String, String>();
         try {
@@ -218,22 +239,51 @@ public class PaymentController extends BaseController {
                 String out_trade_no = result.get("out_trade_no");
                 String result_code = result.get("result_code");
                 String orderId = result.get("attach");
+
+
                 if ("SUCCESS".equals(result_code)) {
                     //支付流水添加
                     Integer total_fee = Integer.valueOf(result.get("total_fee"));
-                    Order order = new Order().dao().findById(orderId);
+
+                    BigDecimal total_amount = new BigDecimal(total_fee).divide(new BigDecimal(100));
+
+                    Order order = new Order().dao().findFirst("select * from kf_order where sn = ?", orderId);
+
+                    // 支付宝返回的金额 和 订单金额不一致
+                    if (total_amount.compareTo(order.getTotalPrice()) != 0) {
+                        logger.warn("微信回调：orderSn = {" + orderId + "} 订单金额{" + order.getTotalPrice() + "} 和 回调金额{" + total_amount + "}不一致");
+                        renderJson("error");
+                        return;
+                    }
+
+
                     Payment payment = new Payment();
                     payment.setCreateDate(new Date());
                     payment.setModifyDate(new Date());
                     payment.setMemberId(order.getMemberId());
                     payment.setOrderId(order.getId());
-                    payment.setAmount(new BigDecimal(total_fee).divide(new BigDecimal(100)));
+                    payment.setAmount(total_amount);
                     payment.setSn(out_trade_no);
                     payment.setMethod(CommonAttribute.PAYMENT_METHOD_WEIXIN);
                     payment.save();
-                    //订单状态修改
-                    order.setStatus(CommonAttribute.ORDER_STATUS_PENDING_SHIPMENT);
+
+                    // 状态是 待支付 才修改为 修改为 已经支付
+                    if (StringUtils.equals(order.getStatus(), CommonAttribute.ORDER_STATUS_PENDING_PAYMENT)) {
+                        order.setStatus(CommonAttribute.ORDER_STATUS_PENDING_SHIPMENT);
+                        // order.update();
+                    } else {
+                        logger.warn("微信回调：order = {" + order + "},微信内部唯一标识号：out_trade_no={" + out_trade_no + "} 不是待支付状态");
+                        return;
+                    }
+
+                    // 购买的会员
+                    if (order.getSn().startsWith("XYHY_")) {
+                        order.setStatus(CommonAttribute.ORDER_STATUS_COMPLETED);
+                        CtcUserMemeberService ctcUserMemeberService = new CtcUserMemeberService();
+                        ctcUserMemeberService.updateUserMember(order);
+                    }
                     order.update();
+
                     //返回
                     weixinResult.put("return_code", "SUCCESS");
                     weixinResult.put("return_msg", "OK");
@@ -250,4 +300,6 @@ public class PaymentController extends BaseController {
             e.printStackTrace();
         }
     }
+
+
 }
