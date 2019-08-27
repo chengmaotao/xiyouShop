@@ -84,9 +84,7 @@ public class PaymentController extends BaseController {
         Order order = new Order().dao().findById(orderId);
         if (StringUtils.isNotBlank(paymentMethod) && order != null && CommonAttribute.ORDER_STATUS_PENDING_PAYMENT.equals(order.getStatus())) {
             Map<String, String> result = WeixinUtils.h5Pay(order.getId(), order.getSn(), order.getTotalPrice(), "订单支付", getRequest());
-            logger.info("wechatH5Pay:" + result);
             Feedback success = Feedback.success(result);
-            logger.info("returnHtml:" + success);
             renderJson(success);
         } else if (order != null) {
             logger.info("wechatH5Pay() 已经支付成功过了 直接进入订单详情页面" + order.getId());
@@ -226,7 +224,6 @@ public class PaymentController extends BaseController {
      * 微信异步
      */
     public void weixinNotify() {
-        System.out.println("微信回调guolaile……");
         String data = HttpKit.readData(getRequest());
         Map<String, String> weixinResult = new HashMap<String, String>();
         try {

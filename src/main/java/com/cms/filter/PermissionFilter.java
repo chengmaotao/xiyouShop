@@ -84,8 +84,6 @@ public class PermissionFilter implements Filter {
         String[] allowDomain = allowDomains.split(",");
 
         String origin = request.getHeader("Origin");
-
-        System.out.println("origin: " + origin);
         
         boolean bAllow = false;
 

@@ -248,7 +248,6 @@
              if(paymentMethod=='alipay'){
                  $('#inputForm').submit();
              }else if(paymentMethod=='weixin'){
-                 alert("不是微信浏览器 微信支付");
                  $.ajax({
                      url: "${base}/payment/wechatH5Pay",
                      type: "POST",

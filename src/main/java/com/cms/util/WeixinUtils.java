@@ -670,9 +670,6 @@ public class WeixinUtils {
 
         try {
             String xml = generateSignedXml(params, config.getWeixinpayKey());  //API密钥
-
-            System.out.println("参数：" + xml);
-
             String content = HttpKit.post("https://api.mch.weixin.qq.com/pay/unifiedorder", xml);
             return xmlToMap(content);
         } catch (Exception e) {
@@ -697,8 +694,6 @@ public class WeixinUtils {
      * @throws Exception
      */
     public static Map<String, String> xmlToMap(String strXML) throws Exception {
-
-        System.out.println("xmlToMap" + strXML);
 
         try {
             Map<String, String> data = new HashMap<String, String>();
