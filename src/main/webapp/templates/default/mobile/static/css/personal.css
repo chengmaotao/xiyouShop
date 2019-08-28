@@ -74,7 +74,7 @@ a.more_rpe{display:block;padding:15px 0;border-top:1px solid #dedede;text-align:
 .order_item > div ul li img{border:1px solid #e7e7e7;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 .order_item > div > a{float:right;line-height:60px;text-align:right;width:10%;}
 .order_item > div > a:before{font:2em "Muiicons";content:"\e583";color:#999;}
-.order_item > p{text-align:right;border-bottom:1px solid #e7e7e7;}
+.order_item > p{text-align:right;}
 .order_item > section{line-height:normal;margin-top:10px;}
 .order_item > section a{display:inline-block;padding:0 10px;border:1px solid #6bc30d;border-radius:5px;overflow:hidden;color:#6bc30d;line-height:2em;}
 .order_item > section a:nth-child(1){float:right;}

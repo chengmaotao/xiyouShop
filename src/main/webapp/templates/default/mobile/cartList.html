@@ -42,7 +42,8 @@
 							[#if isMember]
 								<span class="fontred">￥${cartItem.product.price}</span>
 							[#else]
-								<span class="fontred">￥${cartItem.product.marketPrice}</span>
+								<span class="fontred">￥${cartItem.product.marketPrice}</span><br/>
+						        <span style="color: orange;">会员价￥${cartItem.product.price}</span><br/>
 							[/#if]
 
 

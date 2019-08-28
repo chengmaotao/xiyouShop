@@ -74,16 +74,20 @@ a {
 </style>
 </head>
 <body>
-<header class="header">
-        <div class="logo fl"><a href="${base}/"><img src="${base}/templates/${config.theme}/mobile/static/images/logo.png" alt="" /></a></div>
-        <div class="head_meun"><a href="${base}/view/help"></a></div>
-    </header>
+<header class="bar">
+    <div class="goBack" onclick="javascript:location.href='/'"></div>
+    <p style="font-size: 2em;text-align: center">
+        我的订单
+    </p>
+    <div class="head_meun"><a href="/view/help"></a></div>
+</header>
+
     <div style="line-height:44px; height:44px; width:100%"></div>
 	[#if page.list?? && page.list?size>0]
 	[#list page.list as order]
-		<div class="order_item" onclick="javascript:location.href='${base}/member/order/detail/${order.id}'">
+		<div class="order_item">
 			<header><span>${order.statusName}</span>${order.createDate}</header>
-			<div class="picScroll-left">
+			<div class="picScroll-left" onclick="javascript:location.href='${base}/member/order/detail/${order.id}'">
 				<div class="bd">
 					<ul style="width:1000px;">
 						[#list order.orderItems as orderItem]
@@ -94,7 +98,12 @@ a {
 				<a class="next"></a>
 			</div>
 			<p>共${order.quantity}件商品   ￥${order.totalPrice}</p>
-			<!-- <section><a href="user.php&#63;act=order_comment">去评论</a><a href="user.php&#63;act=rbuy&id=369419">再次购买</a></section> -->
+			 <section style="text-align: right">
+
+                 <a style="display: none"></a>
+                 [#if order.status=='pendingPayment'] <a href="#" onclick="javascript:location.href='${base}/member/order/detail/${order.id}'">去支付</a>[/#if]
+                 [#if order.status=='shipped']<a href="#" onclick="javascript:location.href='${base}/member/order/received?id=${order.id}'">确认收货</a>[/#if]
+             </section>
 		</div>
 	[/#list]
 	[#else]
@@ -103,7 +112,7 @@ a {
             <a class="btn_red incart" href="${base}/">去首页逛逛</a>
         </div>
         [/#if]
-	<footer>
+<!--	<footer>
         <a href="${base}/">首页</a>
         <a class="cur" href="${base}/member/order/list">订单</a>
         <a href="${base}/member">我的</a>
@@ -114,7 +123,7 @@ a {
                 <div></div>
             </div>
         </a>
-    </footer>
+    </footer>-->
 </body>
 </html>
 <script type="text/javascript" src="${base}/templates/${config.theme}/mobile/static/js/jquery.js"></script>

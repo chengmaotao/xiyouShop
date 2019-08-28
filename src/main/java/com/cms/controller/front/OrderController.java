@@ -149,7 +149,9 @@ public class OrderController extends BaseController {
         for (CartItem cartItem : cartItems) {
             new CartItem().dao().deleteById(cartItem.getId());
         }
-        redirect("/payment?orderId=" + order.getId());
+       // redirect("/payment?orderId=" + order.getId());
+
+        redirect("/member/order/detail/" + order.getId());
     }
 
 
@@ -215,7 +217,8 @@ public class OrderController extends BaseController {
 
         Config config = SystemUtils.getConfig();
         //
-        String orderUrl = new StringBuffer("").append(config.getSiteUrl()).append("/payment?orderId=").append(order.getId()).toString();
+        //String orderUrl = new StringBuffer("").append(config.getSiteUrl()).append("/payment?orderId=").append(order.getId()).toString();
+        String orderUrl = new StringBuffer("").append(config.getSiteUrl()).append("/member/order/detail/").append(order.getId()).toString();
 
         renderJson(Feedback.success(orderUrl));
         //redirect("/payment?orderId=" + order.getId());

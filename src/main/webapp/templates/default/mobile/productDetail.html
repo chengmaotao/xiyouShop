@@ -31,19 +31,21 @@
 				<li class="cur"></li>
 			</ol>
 		</div>
-		<div class="pro_price pd10">
+		<div class="pro_price pd10" style="padding: 5px 10px">
 			<span>&yen;${product.price}</span>
 			<var>会员价</var>
 			<em>市场价<em>￥${product.marketPrice}</em></em>
 		</div>
-		<div class="pro_support pd10">
+		<div class="pro_support pd10" style="padding: 5px 10px;background-color: white;">
 			<!--<p><var>服务支持：</var>24小时无条件退换货、1小时送达/半日达</p>-->
-			<p><em>送</em>满${delivery}元，免费配送</p>
+			<!--<p><em>送</em>满${delivery}元，免费配送</p>-->
+			<p style="color: #4f4f4f;font-size: 1.6em; font-weight: bold;">${product.caption}</p>
 		</div>
 		<div class="pro_parameter">
-			<input type="hidden" id="cpgugelistId" value="${product.specList}">
-			<h2>产品参数</h2>
+			<!--<input type="hidden" id="cpgugelistId" value="${product.specList}">-->
+			<h2 style="font-size: 1.3em;">产品参数</h2>
 			<ul id="cpcsId">
+				<!--<li><label>标题</label><span>${product.caption}</span></li>-->
 				<li><label>厂家</label><span>${product.production}</span></li>
                 <li><label>特点</label><span>${product.trait}</span></li>
 
