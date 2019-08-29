@@ -111,13 +111,17 @@ public class CartItemController extends BaseController {
         if (member) {
             result.put("subtotal", cartItem.getSubtotal());
             result.put("totalPrice", currentCart.getTotalPrice());
+            result.put("jies", "0");
         } else {
             result.put("subtotal", cartItem.getMarketSubtotal());
             result.put("totalPrice", currentCart.getMarketTotalPrice());
+            String jies = currentCart.getMarketTotalPrice().subtract(currentCart.getTotalPrice()).stripTrailingZeros().toPlainString();
+            result.put("jies", jies);
         }
 
         result.put("productQuantity", cartItem.getQuantity());
         result.put("quantity", currentCart.getQuantity());
+
 
         renderJson(result);
     }

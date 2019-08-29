@@ -22,11 +22,24 @@
 <div style="line-height:44px; height:44px; width:100%"></div>
 <div id="cart_list">
     [#if currentCart.cartItems?? && currentCart.cartItems?size>0]
-		<div class="space10"></div>
+
+	[#if isMember]
 		<h2 class="order_sendby clearfix"><span>共${currentCart.quantity}件商品</span></h2>
+	[#else]
+		<div class="space10 newspace10">
+			<div class="inmen">加入会员可节省 ￥<span id="jiesId">${jies}</span> </div>
+
+			[#if isLogin]
+				<div class="rightnow" onclick="xiyouMember()">立即加入</div>
+			[#else]
+				<div class="rightnow" onclick="javascript:location.href='${base}/login'">立即加入</div>
+			[/#if]
+
+		</div>
+		<h2 class="order_sendby clearfix neworder_sendby"><span>共${currentCart.quantity}件商品</span></h2>
+	[/#if]
 
 		<div class="cartdiv">
-
 		      [#list currentCart.cartItems as cartItem]
 	       	<div class="cartlist clearfix newlast-child2">
 	     			<div class="space10"></div>
@@ -139,6 +152,8 @@ function updateChangeQuantity(productId,quantity){
             function(data){
                 $("#cartItem_subtotal_"+productId).html("￥"+data.subtotal);
                 $("#totalPrice").html("￥"+data.totalPrice);
+
+                $("#jiesId").html(data.jies);
             },
             function(data){
         });
@@ -159,6 +174,16 @@ function deleteCartItem(cartItemId,type){
             function(data){
         });
 
+}
+
+function xiyouMember() {
+    //ajax
+    $.ax("${base}/ctc/member/openMemberView",null,'GET',null,'json',
+        function(res){
+            if(res.type == "success"){
+                location.href=res.data;
+            }
+        });
 }
 
 </script>

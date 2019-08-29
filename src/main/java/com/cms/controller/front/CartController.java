@@ -2,10 +2,12 @@ package com.cms.controller.front;
 
 import com.cms.entity.Cart;
 import com.cms.entity.CartItem;
+import com.cms.entity.Member;
 import com.cms.entity.Product;
 import com.cms.routes.RouteMapping;
 import com.cms.util.XiYouUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,8 +27,22 @@ public class CartController extends BaseController {
         Cart currentCart = getCurrentCart();
         setAttr("currentCart", currentCart);
 
+
+        Member currentMember = getCurrentMember();
+        if(currentMember == null || currentMember.getId() == null){
+            setAttr("isLogin", false);
+        }else{
+            setAttr("isLogin", true);
+        }
+
         //  西柚会员  TODO
-        boolean member = XiYouUtils.getByMember(getCurrentMember());
+        boolean member = XiYouUtils.getByMember(currentMember);
+
+        if(!member){
+            BigDecimal subtract = currentCart.getMarketTotalPrice().subtract(currentCart.getTotalPrice());
+            setAttr("jies", subtract.stripTrailingZeros().toPlainString());
+        }
+
         setAttr("isMember", member);
 
         render("/templates/" + getTheme() + "/" + getDevice() + "/cartList.html");

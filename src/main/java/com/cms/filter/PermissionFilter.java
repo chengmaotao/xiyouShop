@@ -84,7 +84,7 @@ public class PermissionFilter implements Filter {
         String[] allowDomain = allowDomains.split(",");
 
         String origin = request.getHeader("Origin");
-        
+
         boolean bAllow = false;
 
         if (origin == null) {
@@ -105,16 +105,15 @@ public class PermissionFilter implements Filter {
 
 
         if (bAllow) {
-            {
-                response.setHeader("Access-Control-Allow-Origin", origin);
-                response.setContentType("application/json;charset=UTF-8");
-                response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-                response.setHeader("Access-Control-Max-Age", "3600");
-                response.setHeader("Access-Control-Allow-Headers", "Origin,X-Requested-With,Content-Type,Accept,X-DEV-ID,X-WeshareAuth-Token");
-                // 如果要把Cookie发到服务器，需要指定Access-Control-Allow-Credentials字段为true
-                response.setHeader("Access-Control-Allow-Credentials", "true");
-                response.setHeader("Access-Control-Expose-Headers", "*");
-            }
+
+            response.setHeader("Access-Control-Allow-Origin", origin);
+            response.setContentType("application/json;charset=UTF-8");
+            response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+            response.setHeader("Access-Control-Max-Age", "3600");
+            response.setHeader("Access-Control-Allow-Headers", "Origin,X-Requested-With,Content-Type,Accept,X-DEV-ID,X-WeshareAuth-Token");
+            // 如果要把Cookie发到服务器，需要指定Access-Control-Allow-Credentials字段为true
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Expose-Headers", "*");
 
 
             String url = request.getRequestURI().toString();
